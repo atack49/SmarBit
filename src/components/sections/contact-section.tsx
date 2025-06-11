@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Mail, Phone, MapPinIcon, Instagram, Facebook } from 'lucide-react';
+import { Mail, Phone, MapPin, Instagram, Facebook } from 'lucide-react'; // Changed MapPinIcon to MapPin
 
 export default function ContactSection() {
   return ( 
@@ -21,7 +21,7 @@ export default function ContactSection() {
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="flex items-start gap-4">
-                <MapPinIcon className="h-6 w-6 text-primary mt-1 flex-shrink-0" />
+                <MapPin className="h-6 w-6 text-primary mt-1 flex-shrink-0" /> {/* Changed MapPinIcon to MapPin */}
                 <div>
                   <h3 className="font-semibold text-foreground">Dirección</h3>
                   <p className="text-foreground/80">Carretera del Departamento del D.F. km 7.5, Santa María Atarasquillo Municipio de Lerma C. P. 52044.</p>
