@@ -33,22 +33,22 @@ const stepsData: Step[] = [
   },
   {
     stepNumber: 3,
-    title: "Paso 3: Explora Funcionalidades",
-    description: "Familiarízate con las herramientas de MyFitGuide.",
+    title: "Paso 3: Primera Rutina",
+    description: "Selecciona o crea tu primera rutina de entrenamiento",
     subItems: [
-      "Navega por los planes de dieta.",
-      "Revisa las rutinas de ejercicio.",
-      "Descubre recomendaciones locales.",
+      "Explora rutinas predefinidas",
+      "Personaliza según tu nivel",
+      "Programa tus días de entrenamiento",
     ],
   },
   {
     stepNumber: 4,
-    title: "Paso 4: Comienza tu Viaje",
-    description: "¡Es hora de empezar a transformar tu salud!",
+    title: "Paso 4: Seguimiento Diario",
+    description: "Registra tus entrenamientos y progreso",
     subItems: [
-      "Sigue tu primer plan de comidas.",
-      "Completa tu primera sesión de ejercicio.",
-      "Registra tu progreso y mantente motivado.",
+      "Marca ejercicios completados",
+      "Registra pesos y repeticiones",
+      "Toma fotos de progreso",
     ],
   },
 ];
