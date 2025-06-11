@@ -1,8 +1,9 @@
+
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import Image from 'next/image';
-import { Menu, Download } from 'lucide-react'; // Added Download icon
+import { Menu, Download } from 'lucide-react'; 
 
 const navItems = [
   { href: '#about', label: 'Sobre nosotros' },
@@ -38,7 +39,7 @@ export default function Header() {
 
         <div className="flex items-center gap-2">
           <Button asChild className="hidden md:flex bg-primary hover:bg-primary/90 text-primary-foreground">
-            <Link href="/download-app"> {/* Placeholder link */}
+            <Link href="/quick-start"> 
               <Download className="mr-2 h-5 w-5" />
               Descargar App
             </Link>
@@ -63,7 +64,7 @@ export default function Header() {
                     </Link>
                   ))}
                   <Link
-                    href="/download-app" // Placeholder link
+                    href="/quick-start" 
                     className="text-lg font-medium text-foreground hover:text-primary flex items-center"
                   >
                     <Download className="mr-2 h-5 w-5" />

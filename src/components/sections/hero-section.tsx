@@ -1,3 +1,4 @@
+
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { PlayCircle, ArrowRight } from 'lucide-react';
@@ -15,13 +16,13 @@ export default function HeroSection() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
             <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground">
-              <Link href="#myfitguide"> {/* Updated href to point to MyFitGuide section */}
+              <Link href="#myfitguide"> 
                 <PlayCircle className="mr-2 h-5 w-5" />
                 Ver Tutorial
               </Link>
             </Button>
             <Button asChild size="lg" variant="outline" className="border-primary text-primary hover:bg-primary/10">
-              <Link href="#contact"> {/* Updated href to point to Contact section or relevant guide */}
+              <Link href="/quick-start"> 
                 Guía Rápida
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
