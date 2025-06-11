@@ -4,7 +4,7 @@ import { Instagram, Facebook } from 'lucide-react';
 export default function Footer() {
   return (
     <footer className="border-t border-border/40 bg-background">
-      <div className="container flex flex-col items-center justify-between gap-4 py-8 md:flex-row px-4 md:px-8 lg:px-12">
+      <div className="container flex flex-col items-center justify-between gap-4 py-8 md:flex-row px-4 sm:px-6 lg:px-8">
         <p className="text-sm text-foreground/70">
           © {new Date().getFullYear()} SmartBit Health Hub. All rights reserved.
         </p>
