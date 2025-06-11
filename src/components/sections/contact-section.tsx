@@ -5,7 +5,7 @@ import { Mail, Phone, MapPin, Instagram, Facebook } from 'lucide-react'; // Chan
 
 export default function ContactSection() {
   return ( 
-    <section id="contact" className="py-16 md:py-24 bg-background pt-16">
+    <section id="contact" className="py-16 md:py-24 bg-background">
       <div className="container px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-headline font-bold text-primary sm:text-4xl">Contáctanos</h2>

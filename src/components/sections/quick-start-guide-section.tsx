@@ -55,7 +55,7 @@ const stepsData: Step[] = [
 
 export default function QuickStartGuideSection() {
   return (
-    <section id="quick-start-guide" className="py-12 md:py-20 bg-background">
+    <section id="quick-start-guide" className="py-16 md:py-24 bg-background">
       <div className="container px-4 sm:px-6 lg:px-8">
         <div className="relative mb-10 text-center">
           <h2 className="text-3xl font-headline font-bold text-primary sm:text-4xl">
