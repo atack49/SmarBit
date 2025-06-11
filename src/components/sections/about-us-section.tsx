@@ -5,7 +5,7 @@ import { Zap, Target, Brain } from 'lucide-react';
 export default function AboutUsSection() {
   return (
     <section id="about" className="py-16 md:py-24 bg-background">
-      <div className="container">
+      <div className="container px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-headline font-bold text-primary sm:text-4xl">A cerca de SmartBit</h2>
         </div>

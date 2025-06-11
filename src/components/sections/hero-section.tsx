@@ -5,7 +5,7 @@ import { PlayCircle, ArrowRight } from 'lucide-react';
 export default function HeroSection() {
   return (
     <section id="hero" className="w-full">
-      <div className="container flex flex-col items-center justify-center text-center py-16 md:py-24 lg:py-32">
+      <div className="container flex flex-col items-center justify-center text-center py-16 md:py-24 lg:py-32 px-4 sm:px-6 lg:px-8">
         <div className="space-y-6 max-w-3xl">
           <h1 className="text-4xl font-headline font-bold tracking-tight text-foreground sm:text-5xl md:text-6xl">
             Domina tu Fitness con <span className="text-primary">MyFitGuide</span>
