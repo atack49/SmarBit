@@ -42,15 +42,15 @@ export default function GeographicRecommendationsForm() {
           setValue('longitude', position.coords.longitude);
           setIsLocating(false);
           toast({
-            title: "Location Acquired",
-            description: "Your current location has been filled in.",
+            title: "Ubicación adquirida",
+            description: "Tu ubicación actual ha sido completada.",
           });
         },
         (error) => {
           console.error("Error getting location:", error);
           toast({
-            title: "Location Error",
-            description: "Could not get your location. Please enter manually.",
+            title: "Error de ubicación",
+            description: "No se pudo obtener su ubicación. Por favor, introdúzcala manualmente..",
             variant: "destructive",
           });
           setIsLocating(false);
@@ -58,8 +58,8 @@ export default function GeographicRecommendationsForm() {
       );
     } else {
       toast({
-        title: "Geolocation Not Supported",
-        description: "Your browser does not support geolocation. Please enter manually.",
+        title: "Geolocalización no compatible",
+        description: "Su navegador no admite la geolocalización. ¡Introdúzcala manualmente!.",
         variant: "destructive",
       });
     }
@@ -73,15 +73,15 @@ export default function GeographicRecommendationsForm() {
       const result = await recommendPlaces(data);
       setGeoResult(result);
       toast({
-        title: "Recommendations Found!",
-        description: "Nearby gyms and healthy food stores are listed below.",
+        title: "¡Recomendaciones encontradas!",
+        description: "A continuación se enumeran los gimnasios y tiendas de alimentos saludables cercanos.",
       });
       // Do not reset form here, user might want to adjust coordinates
     } catch (error) {
       console.error("Error getting recommendations:", error);
       toast({
         title: "Error",
-        description: "Failed to get recommendations. Please try again.",
+        description: "No se pudieron obtener las recomendaciones. Inténtalo de nuevo..",
         variant: "destructive",
       });
     } finally {
@@ -94,11 +94,10 @@ export default function GeographicRecommendationsForm() {
       <CardHeader>
         <CardTitle className="flex items-center gap-2 font-headline text-2xl">
           <MapPin className="h-6 w-6 text-primary" />
-          Find Nearby Healthy Spots
+          Encuentre lugares saludables cercanos
         </CardTitle>
         <CardDescription>
-          Enter your coordinates or use your current location to find gyms and healthy food stores.
-        </CardDescription>
+        Ingresa tus coordenadas o utiliza tu ubicación actual para encontrar gimnasios y tiendas de comida saludable.        </CardDescription>
       </CardHeader>
       <form onSubmit={handleSubmit(onSubmit)}>
         <CardContent className="space-y-6">
@@ -136,12 +135,12 @@ export default function GeographicRecommendationsForm() {
             {isLocating ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Getting Location...
+                Obtener ubicación...
               </>
             ) : (
               <>
                 <LocateFixed className="mr-2 h-4 w-4" />
-                Use My Current Location
+                Usar mi ubicación actual
               </>
             )}
           </Button>
@@ -151,10 +150,10 @@ export default function GeographicRecommendationsForm() {
             {isLoading ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Searching...
+                Buscando...
               </>
             ) : (
-              'Get Recommendations'
+              'Obtener recomendaciones'
             )}
           </Button>
         </CardFooter>
@@ -163,35 +162,35 @@ export default function GeographicRecommendationsForm() {
       {geoResult && (
         <CardContent className="mt-6 border-t pt-6 space-y-6">
           <div>
-            <h3 className="font-headline text-xl font-semibold mb-3">Nearby Gyms:</h3>
+            <h3 className="font-headline text-xl font-semibold mb-3">Gimnasios cercanos:</h3>
             {geoResult.gyms && geoResult.gyms.length > 0 ? (
               <ul className="space-y-3">
                 {geoResult.gyms.map((gym, index) => (
                   <li key={`gym-${index}`} className="p-3 bg-muted rounded-md text-sm">
                     <p className="font-semibold text-primary">{gym.name}</p>
                     <p className="text-muted-foreground">{gym.address}</p>
-                    <p className="text-xs text-muted-foreground/80">{gym.distance} meters away</p>
+                    <p className="text-xs text-muted-foreground/80">{gym.distance} a metros de distancia</p>
                   </li>
                 ))}
               </ul>
             ) : (
-              <p className="text-muted-foreground">No gyms found nearby.</p>
+              <p className="text-muted-foreground">No se encontraron gimnasios cerca.</p>
             )}
           </div>
           <div>
-            <h3 className="font-headline text-xl font-semibold mb-3">Nearby Healthy Food Stores:</h3>
+            <h3 className="font-headline text-xl font-semibold mb-3">Tiendas de alimentos saludables cercanas:</h3>
             {geoResult.healthyFoodStores && geoResult.healthyFoodStores.length > 0 ? (
               <ul className="space-y-3">
                 {geoResult.healthyFoodStores.map((store, index) => (
                   <li key={`store-${index}`} className="p-3 bg-muted rounded-md text-sm">
                     <p className="font-semibold text-primary">{store.name}</p>
                     <p className="text-muted-foreground">{store.address}</p>
-                    <p className="text-xs text-muted-foreground/80">{store.distance} meters away</p>
+                    <p className="text-xs text-muted-foreground/80">{store.distance} a metros de distancia</p>
                   </li>
                 ))}
               </ul>
             ) : (
-              <p className="text-muted-foreground">No healthy food stores found nearby.</p>
+              <p className="text-muted-foreground">No se encontraron tiendas de alimentos saludables cerca.</p>
             )}
           </div>
         </CardContent>

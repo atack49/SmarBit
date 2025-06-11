@@ -3,8 +3,8 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster"; // Import Toaster
 
 export const metadata: Metadata = {
-  title: 'SmartBit Health Hub',
-  description: 'AI-powered solutions for health and wellness by SmartBit.',
+  title: 'SmartBit "Tú meta, tú plan, tú precio"',
+  description: 'Soluciones impulsadas por IA para la salud y el bienestar de SmartBit.',
 };
 
 export default function RootLayout({
