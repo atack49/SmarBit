@@ -6,7 +6,7 @@ import { Mail, Phone, MapPin, Instagram, Facebook } from 'lucide-react'; // Chan
 export default function ContactSection() {
   return ( 
     <section id="contact" className="py-16 md:py-24 bg-background">
-      <div className="container px-4 sm:px-6 lg:px-8">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-headline font-bold text-primary sm:text-4xl">Contáctanos</h2>
           <p className="mt-4 text-lg text-foreground/80 max-w-2xl mx-auto">
@@ -37,10 +37,10 @@ export default function ContactSection() {
               </div>
               <div className="flex items-center gap-4 pt-4 border-t border-border/40">
                 <h3 className="font-semibold text-foreground">Síganos:</h3>
-                <Link href="https://instagram.com/smartbithealth" target="_blank" rel="noopener noreferrer" aria-label="SmartBit Instagram">
+                <Link href="https://www.instagram.com/my_fit.guide?igsh=eTVuMHk3OXVjZWZw&utm_source=qr" target="_blank" rel="noopener noreferrer" aria-label="SmartBit Instagram">
                   <Instagram className="h-7 w-7 text-foreground/70 hover:text-primary transition-colors" />
                 </Link>
-                <Link href="https://facebook.com/smartbithealth" target="_blank" rel="noopener noreferrer" aria-label="SmartBit Facebook">
+                <Link href="https://www.facebook.com/share/1BnGdHiY7L/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" aria-label="SmartBit Facebook">
                   <Facebook className="h-7 w-7 text-foreground/70 hover:text-primary transition-colors" />
                 </Link>
               </div>
