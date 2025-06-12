@@ -52,14 +52,6 @@ export default function MyFitGuideSection() {
               <li>Asegúrese de que los usuarios completen al menos 5 entrenamientos semanales dentro de la aplicación.</li>
             </ul>
           </div>
-
-
-        </div>
-
-        <div className="mx-auto grid max-w-5xl items-start gap-6 py-12 lg:grid-cols-2 lg:gap-12">
-          <div className="flex flex-col justify-center space-y-4">
-
-          </div>
         </div>
 
          {/* Forms Section */}

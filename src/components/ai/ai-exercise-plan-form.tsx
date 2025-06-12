@@ -17,12 +17,12 @@ import { Loader2, Activity } from 'lucide-react';
 
 const exercisePlanSchema = z.object({
   fitnessLevel: z.enum(['beginner', 'intermediate', 'advanced'], {
-    required_error: "Please select your fitness level."
+    required_error: "Por favor seleccione su nivel de condición física."
   }),
-  goals: z.string().min(3, "Please describe your fitness goals."),
-  availableEquipment: z.string().min(3, "List available equipment (or 'none')."),
-  exerciseDuration: z.string().min(3, "e.g., 30 minutes, 1 hour"),
-  exerciseFrequency: z.string().min(3, "e.g., 3 times a week, 5 times a week"),
+  goals: z.string().min(3, "Por favor describe tus objetivos de fitness."),
+  availableEquipment: z.string().min(3, "Enumere el equipo disponible (o 'ninguno')."),
+  exerciseDuration: z.string().min(3, "p. ej., 30 minutos, 1 hora"),
+  exerciseFrequency: z.string().min(3, "p. ej., 3 veces a la semana, 5 veces a la semana"),
 });
 
 export default function AIExercisePlanForm() {
@@ -47,15 +47,15 @@ export default function AIExercisePlanForm() {
       const result = await generateExercisePlan(data);
       setExercisePlanResult(result);
       toast({
-        title: "Exercise Plan Generated!",
-        description: "Your personalized exercise plan is ready.",
+        title: "¡Plan de ejercicios generado!",
+        description: "Tu plan de ejercicios personalizado está listo.",
       });
       reset();
     } catch (error) {
-      console.error("Error generating exercise plan:", error);
+      console.error("Error al generar el plan de ejercicios:", error);
       toast({
         title: "Error",
-        description: "Failed to generate exercise plan. Please try again.",
+        description: "No se pudo generar el plan de ejercicios. Inténtalo de nuevo..",
         variant: "destructive",
       });
     } finally {
@@ -68,28 +68,28 @@ export default function AIExercisePlanForm() {
       <CardHeader>
         <CardTitle className="flex items-center gap-2 font-headline text-2xl">
           <Activity className="h-6 w-6 text-primary" />
-          Create Your AI Exercise Plan
+          Crea tu plan de ejercicios de IA
         </CardTitle>
         <CardDescription>
-          Provide your details for a customized exercise routine from our AI.
+        Proporciona tus datos para una rutina de ejercicios personalizada de nuestra IA.
         </CardDescription>
       </CardHeader>
       <form onSubmit={handleSubmit(onSubmit)}>
         <CardContent className="space-y-6">
           <div className="space-y-2">
-            <Label htmlFor="fitnessLevel">Fitness Level</Label>
+            <Label htmlFor="fitnessLevel">Nivel de condición física</Label>
             <Controller
               name="fitnessLevel"
               control={control}
               render={({ field }) => (
                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                   <SelectTrigger id="fitnessLevel" className={errors.fitnessLevel ? 'border-destructive' : ''}>
-                    <SelectValue placeholder="Select fitness level" />
+                    <SelectValue placeholder="Seleccione su nivel de condición física" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="beginner">Beginner</SelectItem>
-                    <SelectItem value="intermediate">Intermediate</SelectItem>
-                    <SelectItem value="advanced">Advanced</SelectItem>
+                    <SelectItem value="beginner">Principiante</SelectItem>
+                    <SelectItem value="intermediate">Intermedio</SelectItem>
+                    <SelectItem value="advanced">Avanzado</SelectItem>
                   </SelectContent>
                 </Select>
               )}
@@ -100,7 +100,7 @@ export default function AIExercisePlanForm() {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="goals">Fitness Goals</Label>
+            <Label htmlFor="goals">Objetivos de fitness</Label>
             <Textarea
               id="goals"
               placeholder="e.g., weight loss, muscle gain, improve endurance"
