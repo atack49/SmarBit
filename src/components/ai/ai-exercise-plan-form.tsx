@@ -103,7 +103,7 @@ export default function AIExercisePlanForm() {
             <Label htmlFor="goals">Objetivos de fitness</Label>
             <Textarea
               id="goals"
-              placeholder="e.g., weight loss, muscle gain, improve endurance"
+              placeholder="Por ejemplo, pérdida de peso, ganancia muscular, mejora de la resistencia."
               {...register('goals')}
               className={errors.goals ? 'border-destructive' : ''}
             />
@@ -113,10 +113,10 @@ export default function AIExercisePlanForm() {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="availableEquipment">Available Equipment</Label>
+            <Label htmlFor="availableEquipment">Equipo disponible</Label>
             <Input
               id="availableEquipment"
-              placeholder="e.g., dumbbells, resistance bands, treadmill, or 'none'"
+              placeholder="p. ej., mancuernas, bandas de resistencia, cinta de correr o 'ninguno'"
               {...register('availableEquipment')}
               className={errors.availableEquipment ? 'border-destructive' : ''}
             />
@@ -126,10 +126,10 @@ export default function AIExercisePlanForm() {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="exerciseDuration">Preferred Exercise Duration</Label>
+            <Label htmlFor="exerciseDuration">Duración preferida del ejercicio</Label>
             <Input
               id="exerciseDuration"
-              placeholder="e.g., 30 minutes, 1 hour"
+              placeholder="p. ej., 30 minutos, 1 hora"
               {...register('exerciseDuration')}
               className={errors.exerciseDuration ? 'border-destructive' : ''}
             />
@@ -139,10 +139,10 @@ export default function AIExercisePlanForm() {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="exerciseFrequency">Preferred Exercise Frequency</Label>
+            <Label htmlFor="exerciseFrequency">Frecuencia de ejercicio preferida</Label>
             <Input
               id="exerciseFrequency"
-              placeholder="e.g., 3 times a week, 5 times a week"
+              placeholder="p. ej., 3 veces a la semana, 5 veces a la semana"
               {...register('exerciseFrequency')}
               className={errors.exerciseFrequency ? 'border-destructive' : ''}
             />
@@ -156,17 +156,17 @@ export default function AIExercisePlanForm() {
             {isLoading ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Generating Plan...
+                Plan de generación...
               </>
             ) : (
-              'Get Exercise Plan'
+              'Obtener un plan de ejercicios'
             )}
           </Button>
         </CardFooter>
       </form>
       {exercisePlanResult && (
         <CardContent className="mt-6 border-t pt-6">
-          <h3 className="font-headline text-xl font-semibold mb-2">Your Personalized Exercise Plan:</h3>
+          <h3 className="font-headline text-xl font-semibold mb-2">Tu plan de ejercicios personalizado:</h3>
           <pre className="whitespace-pre-wrap bg-muted p-4 rounded-md text-sm text-muted-foreground font-body">
             {exercisePlanResult.exercisePlan}
           </pre>

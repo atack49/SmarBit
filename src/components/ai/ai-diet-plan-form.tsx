@@ -73,7 +73,7 @@ export default function AIDietPlanForm() {
             <Label htmlFor="dietaryRestrictions">Restricciones dietéticas</Label>
             <Textarea
               id="dietaryRestrictions"
-              placeholder="e.g., vegan, gluten-free, allergies to nuts"
+              placeholder="p. ej., vegano, sin gluten, alergia a los frutos secos"
               {...register('dietaryRestrictions')}
               className={errors.dietaryRestrictions ? 'border-destructive' : ''}
             />
@@ -85,7 +85,7 @@ export default function AIDietPlanForm() {
             <Label htmlFor="preferences">Preferencias alimentarias</Label>
             <Textarea
               id="preferences"
-              placeholder="e.g., love fruits, prefer chicken over fish, dislike spicy food"
+              placeholder="p. ej., les encantan las frutas, prefieren el pollo al pescado y no les gusta la comida picante."
               {...register('preferences')}
               className={errors.preferences ? 'border-destructive' : ''}
             />
@@ -97,7 +97,7 @@ export default function AIDietPlanForm() {
             <Label htmlFor="healthGoals">Objetivos de salud</Label>
             <Textarea
               id="healthGoals"
-              placeholder="e.g., weight loss, muscle gain, maintain current weight"
+              placeholder="p. ej., pérdida de peso, ganancia muscular, mantenimiento del peso actual"
               {...register('healthGoals')}
               className={errors.healthGoals ? 'border-destructive' : ''}
             />

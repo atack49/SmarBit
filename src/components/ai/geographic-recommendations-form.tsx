@@ -108,7 +108,7 @@ export default function GeographicRecommendationsForm() {
                 id="latitude"
                 type="number"
                 step="any"
-                placeholder="e.g., 25.7749"
+                placeholder="p. ej., 25.7749"
                 {...register('latitude')}
                 className={errors.latitude ? 'border-destructive' : ''}
               />
@@ -122,7 +122,7 @@ export default function GeographicRecommendationsForm() {
                 id="longitude"
                 type="number"
                 step="any"
-                placeholder="e.g., -80.1918"
+                placeholder="p .ej., -80.1918"
                 {...register('longitude')}
                 className={errors.longitude ? 'border-destructive' : ''}
               />
