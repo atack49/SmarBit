@@ -5,19 +5,22 @@ import { Zap, Target, Brain } from 'lucide-react';
 export default function AboutUsSection() {
   return (
     <section id="about" className="py-16 md:py-24 bg-background">
-      <div className="container px-4 sm:px-6 lg:px-8">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-headline font-bold text-primary sm:text-4xl">A cerca de SmartBit</h2>
+          <div className="mt-4 text-lg text-foreground/80 max-w-3xl mx-auto space-y-4">
+            <p className="leading-relaxed">
+            tiene como objeto social el desarrollo, comercialización y mantenimiento de software basado en inteligencia artificial, así como la creación de soluciones tecnológicas en salud y bienestar.
+            </p>
+            <p className="leading-relaxed">
+            Como proyecto inicial, la empresa desarrollará una aplicación basada en inteligencia artificial que diseñará planes de alimentación y ejercicio, proporcionando recomendaciones geográficas y ajuste de presupuestos personalizados según las necesidades del usuario.
+            </p>
+          </div>
         </div>
 
         <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div className="space-y-6">
-            <p className="text-foreground/90 leading-relaxed">
-            tiene como objeto social el desarrollo, comercialización y mantenimiento de software basado en inteligencia artificial, así como la creación de soluciones tecnológicas en salud y bienestar.             </p>
-            <p className="text-foreground/90 leading-relaxed">
-            Como proyecto inicial, la empresa desarrollará una aplicación basada en inteligencia artificial que diseñará planes de alimentación y ejercicio, proporcionando recomendaciones geográficas y ajuste de presupuestos personalizados según las necesidades del usuario.
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-6">
+          <div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <Card className="bg-primary/5 border-primary/20">
                 <CardHeader className="flex flex-row items-center gap-3 pb-2">
                   <Zap className="w-6 h-6 text-primary" />
