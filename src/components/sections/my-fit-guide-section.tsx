@@ -9,10 +9,10 @@ import { Separator } from "@/components/ui/separator";
 export default function MyFitGuideSection() {
   return (
     <section id="myfitguide" className="py-16 md:py-24 bg-primary/5">
-      <div className="container px-4 sm:px-6 lg:px-8">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-headline font-bold text-primary sm:text-4xl">Nombre de la Aplicación: My Fit Guide</h2>
-          <p className="mt-4 text-lg text-foreground/80 max-w-3xl mx-auto">
+          <p className="mt-4 text-lg text-foreground/80 max-w-2xl mx-auto">
             Inspirando y guiando tu camino hacia una vida más saludable y activa con planes personalizados impulsados por IA.
           </p>
         </div>
