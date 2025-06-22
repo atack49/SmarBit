@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Mail, Phone, MapPin, Instagram, Facebook } from 'lucide-react'; // Changed MapPinIcon to MapPin
+import { Phone, MapPin, Instagram, Facebook } from 'lucide-react'; // Changed MapPinIcon to MapPin
 
 export default function ContactSection() {
   return ( 

@@ -3,7 +3,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import AIDietPlanForm from "@/components/ai/ai-diet-plan-form";
 import AIExercisePlanForm from "@/components/ai/ai-exercise-plan-form";
 import GeographicRecommendationsForm from "@/components/ai/geographic-recommendations-form";
-import { Lightbulb, DollarSign, Smartphone, CheckCircle } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 
 export default function MyFitGuideSection() {

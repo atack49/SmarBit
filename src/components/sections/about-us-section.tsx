@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Zap, Target, Brain } from 'lucide-react';
+import { Zap, Brain } from 'lucide-react';
 
 export default function AboutUsSection() {
   return (
