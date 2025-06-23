@@ -75,6 +75,20 @@ export default function MyFitGuideSection() {
               </Tabs>
         </div>
       </div>
+      <section className="mt-24 text-center bg-white p-10 rounded-xl shadow-md">
+          <h2 className="text-3xl font-bold text-primary mb-4">¿Ya participaste en nuestra encuesta?</h2>
+          <p className="text-foreground/70 mb-6 max-w-2xl mx-auto">
+            Tus respuestas nos ayudan a mejorar y personalizar aún más tu experiencia con MyFitGuide.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="/resultados-encuesta" className="bg-green-600 text-white px-6 py-3 rounded-md hover:bg-green-700 transition">
+              Ver Resultados
+            </a>
+            <a href="/encuesta" className="bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700 transition">
+              Comenzar Encuesta
+            </a>
+          </div>
+        </section>
     </section>
   );
 }
