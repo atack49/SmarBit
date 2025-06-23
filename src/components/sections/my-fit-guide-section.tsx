@@ -4,6 +4,8 @@ import AIDietPlanForm from "@/components/ai/ai-diet-plan-form";
 import AIExercisePlanForm from "@/components/ai/ai-exercise-plan-form";
 import GeographicRecommendationsForm from "@/components/ai/geographic-recommendations-form";
 import { Separator } from "@/components/ui/separator";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function MyFitGuideSection() {
   return (
@@ -81,12 +83,16 @@ export default function MyFitGuideSection() {
             Tus respuestas nos ayudan a mejorar y personalizar aún más tu experiencia con MyFitGuide.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="/resultados-encuesta" className="bg-green-600 text-white px-6 py-3 rounded-md hover:bg-green-700 transition">
-              Ver Resultados
-            </a>
-            <a href="/encuesta" className="bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700 transition">
-              Comenzar Encuesta
-            </a>
+            <Button asChild>
+              <Link href="/resultados">
+                Ver Resultados
+              </Link>
+            </Button>
+            <Button asChild variant="outline">
+              <Link href="/encuesta">
+                Comenzar Encuesta
+              </Link>
+            </Button>
           </div>
         </section>
     </section>
