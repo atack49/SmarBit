@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useEffect, useState } from "react";
@@ -17,6 +18,8 @@ import {
   CartesianGrid,
 } from "recharts";
 import { ArrowLeft } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 // URL pública de tu Google Sheet en formato CSV
 const SHEET_CSV_URL =
@@ -30,6 +33,8 @@ const COLORS = [
   "#EC4899",
   "#10B981",
   "#EF4444",
+  "#3B82F6",
+  "#8B5CF6",
 ];
 
 // Opciones según las 13 preguntas de tu encuesta
@@ -142,7 +147,7 @@ export default function ResultadosEncuestaPage() {
   };
 
   if (loading) return <p className="text-center mt-10">Cargando datos...</p>;
-  if (error) return <p className="text-center mt-10 text-red-500">Error: {error}</p>;
+  if (error) return <p className="text-center mt-10 text-destructive">Error: {error}</p>;
 
   // Preparar datos de las 13 preguntas
   const datosRangoEdad = contarUnica("¿Cuál es tu rango de edad?", RESPUESTAS.rangoEdad);
@@ -196,69 +201,88 @@ export default function ResultadosEncuestaPage() {
   );
 
   const GraficaPastel = ({ titulo, datos }: { titulo: string; datos: { name: string; cantidad: number }[] }) => (
-    <div className="max-w-4xl mx-auto mb-12">
-      <h2 className="text-xl font-semibold mb-4 text-center">{titulo}</h2>
-      <ResponsiveContainer width="100%" height={250}>
-        <PieChart>
-          <Pie data={datos} dataKey="cantidad" nameKey="name" cx="50%" cy="50%" outerRadius={80} label>
-            {datos.map((_, i) => (
-              <Cell key={i} fill={COLORS[i % COLORS.length]} />
-            ))}
-          </Pie>
-          <Tooltip />
-          <Legend verticalAlign="bottom" height={36} />
-        </PieChart>
-      </ResponsiveContainer>
-    </div>
+    <Card>
+      <CardHeader>
+        <CardTitle className="text-lg font-semibold text-center">{titulo}</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <ResponsiveContainer width="100%" height={300}>
+          <PieChart>
+            <Pie data={datos} dataKey="cantidad" nameKey="name" cx="50%" cy="50%" outerRadius={100} labelLine={false} label={({ cx, cy, midAngle, innerRadius, outerRadius, percent }) => {
+              const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+              const x = cx + radius * Math.cos(-midAngle * (Math.PI / 180));
+              const y = cy + radius * Math.sin(-midAngle * (Math.PI / 180));
+              return (
+                <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
+                  {`${(percent * 100).toFixed(0)}%`}
+                </text>
+              );
+            }}>
+              {datos.map((_, i) => (
+                <Cell key={i} fill={COLORS[i % COLORS.length]} />
+              ))}
+            </Pie>
+            <Tooltip formatter={(value, name) => [`${value} respuestas`, name]}/>
+            <Legend verticalAlign="bottom" height={36} />
+          </PieChart>
+        </ResponsiveContainer>
+      </CardContent>
+    </Card>
   );
 
   const GraficaBarras = ({ titulo, datos }: { titulo: string; datos: { name: string; cantidad: number }[] }) => (
-    <div className="max-w-4xl mx-auto mb-12">
-      <h2 className="text-xl font-semibold mb-4 text-center">{titulo}</h2>
-      <ResponsiveContainer width="100%" height={250}>
-        <BarChart data={datos}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis allowDecimals={false} />
-          <Tooltip />
-          <Legend />
-          <Bar dataKey="cantidad" minPointSize={5}>
-            {datos.map((_, idx) => (
-              <Cell key={idx} fill={COLORS[idx % COLORS.length]} />
-            ))}
-          </Bar>
-        </BarChart>
-      </ResponsiveContainer>
-    </div>
+    <Card>
+      <CardHeader>
+        <CardTitle className="text-lg font-semibold text-center">{titulo}</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <ResponsiveContainer width="100%" height={300}>
+          <BarChart data={datos} margin={{ top: 5, right: 20, left: -10, bottom: 5 }}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" tick={{ fontSize: 12 }} interval={0} angle={-30} textAnchor="end" height={80} />
+            <YAxis allowDecimals={false} />
+            <Tooltip formatter={(value) => [`${value} respuestas`, 'Cantidad']}/>
+            <Bar dataKey="cantidad" minPointSize={5}>
+              {datos.map((_, idx) => (
+                <Cell key={idx} fill={COLORS[idx % COLORS.length]} />
+              ))}
+            </Bar>
+          </BarChart>
+        </ResponsiveContainer>
+      </CardContent>
+    </Card>
   );
 
   return (
-    <main className="min-h-screen bg-white py-10 px-4">
-      {/* Botón de regreso con diseño */}
-      <div className="flex justify-start mb-6">
-        <Link href="/">
-          <button className="flex items-center bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
-            <ArrowLeft className="w-5 h-5 mr-2" />Volver al inicio
-          </button>
-        </Link>
+    <main className="min-h-screen bg-background py-10 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto">
+        <div className="flex justify-start mb-6">
+           <Button asChild variant="outline">
+            <Link href="/">
+              <ArrowLeft className="mr-2 h-4 w-4" /> Volver al inicio
+            </Link>
+          </Button>
+        </div>
+        <h1 className="text-3xl font-bold text-center text-primary mb-10">
+          Resultados de la Encuesta
+        </h1>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <GraficaPastel titulo="1. Rango de edad" datos={datosRangoEdad} />
+            <GraficaPastel titulo="2. Nivel de experiencia con apps" datos={datosNivelExperiencia} />
+            <GraficaPastel titulo="3. Impedimentos para rutina" datos={datosImpideRutina} />
+            <GraficaBarras titulo="4. Funcionalidades imprescindibles" datos={datosFuncionalidades} />
+            <GraficaPastel titulo="5. Frecuencia de uso" datos={datosFrecuenciaUso} />
+            <GraficaPastel titulo="6. Dispositivo principal" datos={datosDispositivo} />
+            <GraficaPastel titulo="7. Disposición a pagar" datos={datosMontoPagar} />
+            <GraficaPastel titulo="8. Tipo de pago preferido" datos={datosTipoPago} />
+            <GraficaPastel titulo="9. Importancia de la personalización" datos={datosImportanciaPersonalizacion} />
+            <GraficaPastel titulo="10. Interés en rutas sugeridas" datos={datosSugerirRutas} />
+            <GraficaPastel titulo="11. Interés en historial con IA" datos={datosHistorialIA} />
+            <GraficaPastel titulo="12. Importancia del progreso visible" datos={datosImportanciaProgreso} />
+            <GraficaPastel titulo="13. Disposición a compartir datos" datos={datosCompartirDatos} />
+        </div>
       </div>
-      <h1 className="text-3xl font-bold text-center text-green-600 mb-10">
-        Resultados de la Encuesta
-      </h1>
-      {/* Renderizar las 13 gráficas */}
-      <GraficaPastel titulo="¿Cuál es tu rango de edad?" datos={datosRangoEdad} />
-      <GraficaPastel titulo="¿Cuál es tu nivel de experiencia con apps de salud y fitness?" datos={datosNivelExperiencia} />
-      <GraficaPastel titulo="¿Qué es lo que más te impide mantener una rutina constante de salud o ejercicio?" datos={datosImpideRutina} />
-      <GraficaBarras titulo="¿Qué funcionalidades te resultarían imprescindibles en una aplicación móvil de salud y fitness?" datos={datosFuncionalidades} />
-      <GraficaPastel titulo="¿Con qué frecuencia usarías una aplicación móvil como esta?" datos={datosFrecuenciaUso} />
-      <GraficaPastel titulo="¿Qué dispositivo utilizarías principalmente para esta aplicación móvil?" datos={datosDispositivo} />
-      <GraficaPastel titulo="¿Cuánto estarías dispuesto a pagar por una suscripción mensual que cumpla con tus expectativas?" datos={datosMontoPagar} />
-      <GraficaPastel titulo="¿Preferirías un pago único, suscripción mensual o anual?" datos={datosTipoPago} />
-      <GraficaPastel titulo="¿Cómo valorarías la importancia de la personalización real en tu plan de dieta y ejercicio?" datos={datosImportanciaPersonalizacion} />
-      <GraficaPastel titulo="¿Te gustaría que la aplicación sugiriera rutas a gimnasios o espacios para entrenar cerca de ti?" datos={datosSugerirRutas} />
-      <GraficaPastel titulo="¿Te gustaría que la aplicación guardara tu historial de progreso y actualizara tu dieta y ejercicios semanalmente con ayuda de inteligencia artificial?" datos={datosHistorialIA} />
-      <GraficaPastel titulo="¿Qué tan importante es para ti poder ver tu progreso dentro de la app?" datos={datosImportanciaProgreso} />
-      <GraficaPastel titulo="¿Estarías dispuesto(a) a compartir datos como tu ubicación o hábitos diarios para mejorar las recomendaciones personalizadas?" datos={datosCompartirDatos} />
     </main>
   );
 }

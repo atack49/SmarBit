@@ -1,3 +1,4 @@
+
 import Image from 'next/image';
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -47,8 +48,8 @@ export default function ContactSection() {
             </CardContent>
           </Card>
 
-          <div className="rounded-xl shadow-lg overflow-hidden">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3764.663220578958!2d-99.47601979999999!3d19.3404149!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d20a1464000001%3A0x1c254456341588a0!2sUniversidad%20Tecnol%C3%B3gica%20del%20Valle%20de%20Toluca!5e0!3m2!1ses-419!2smx!4v1749627993658!5m2!1ses-419!2smx" width="600" height="450" style={{border:0}} allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
+          <div className="rounded-xl shadow-lg overflow-hidden h-[450px]">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3764.663220578958!2d-99.47601979999999!3d19.3404149!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d20a1464000001%3A0x1c254456341588a0!2sUniversidad%20Tecnol%C3%B3gica%20del%20Valle%20de%20Toluca!5e0!3m2!1ses-419!2smx!4v1749627993658!5m2!1ses-419!2smx" className="w-full h-full" style={{border:0}} allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
           </div>
         </div>
       </div>

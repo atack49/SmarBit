@@ -59,7 +59,7 @@ export default function EncuestaForm({ className }: EncuestaFormProps) {
             {/* 1. Rango de edad */}
             <fieldset className="space-y-3">
               <legend className="text-lg font-medium">1. ¿Cuál es tu rango de edad?</legend>
-              <RadioGroup required name="entry.1066883662" className="flex flex-col space-y-2">
+              <RadioGroup required name="entry.1066883662" className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2">
                 {["Menos de 18", "18–25", "26–35"].map((opt) => (
                   <div key={opt} className="flex items-center space-x-2">
                     <RadioGroupItem value={opt} id={`edad-${opt}`} />
@@ -72,7 +72,7 @@ export default function EncuestaForm({ className }: EncuestaFormProps) {
             {/* 2. Nivel de experiencia */}
             <fieldset className="space-y-3">
               <legend className="text-lg font-medium">2. ¿Cuál es tu nivel de experiencia con apps de salud y fitness?</legend>
-              <RadioGroup required name="entry.1997438928" className="flex flex-col space-y-2">
+              <RadioGroup required name="entry.1997438928" className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2">
                 {["Nunca he usado", "He probado alguna, pero ya no la uso", "Uso regularmente 1–2 apps", "Uso varias apps simultáneamente"].map((opt) => (
                   <div key={opt} className="flex items-center space-x-2">
                     <RadioGroupItem value={opt} id={`exp-${opt.replace(/\s+/g, '-')}`} />
@@ -85,7 +85,7 @@ export default function EncuestaForm({ className }: EncuestaFormProps) {
             {/* 3. Lo que más te impide mantener una rutina */}
             <fieldset className="space-y-3">
               <legend className="text-lg font-medium">3. ¿Qué es lo que más te impide mantener una rutina constante de salud o ejercicio?</legend>
-              <RadioGroup required name="entry.1533242634" className="flex flex-col space-y-2">
+              <RadioGroup required name="entry.1533242634" className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2">
                 {["Falta de motivación", "No sé qué ejercicios hacer", "Dieta difícil de seguir", "Falta de tiempo"].map((opt) => (
                   <div key={opt} className="flex items-center space-x-2">
                     <RadioGroupItem value={opt} id={`impide-${opt.replace(/\s+/g, '-')}`} />
@@ -111,7 +111,7 @@ export default function EncuestaForm({ className }: EncuestaFormProps) {
             {/* 5. Frecuencia de uso */}
             <fieldset className="space-y-3">
               <legend className="text-lg font-medium">5. ¿Con qué frecuencia usarías una aplicación móvil como esta?</legend>
-              <RadioGroup required name="entry.1782057900" className="flex flex-col space-y-2">
+              <RadioGroup required name="entry.1782057900" className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2">
                 {["Todos los días", "3–5 veces por semana", "1–2 veces por semana", "Menos de una vez por semana"].map((opt) => (
                   <div key={opt} className="flex items-center space-x-2">
                     <RadioGroupItem value={opt} id={`freq-${opt.replace(/\s+/g, '-')}`} />
@@ -124,7 +124,7 @@ export default function EncuestaForm({ className }: EncuestaFormProps) {
             {/* 6. Dispositivo preferido */}
             <fieldset className="space-y-3">
               <legend className="text-lg font-medium">6. ¿Qué dispositivo utilizarías principalmente para esta aplicación móvil?</legend>
-              <RadioGroup required name="entry.1782133720" className="flex flex-col space-y-2">
+              <RadioGroup required name="entry.1782133720" className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2">
                 {["Smartphone", "Tablet", "Computadora", "Wearable (smartwatch, pulsera)"].map((opt) => (
                   <div key={opt} className="flex items-center space-x-2">
                     <RadioGroupItem value={opt} id={`device-${opt.replace(/\s+/g, '-')}`} />
@@ -137,7 +137,7 @@ export default function EncuestaForm({ className }: EncuestaFormProps) {
             {/* 7. Monto dispuesto a pagar */}
             <fieldset className="space-y-3">
               <legend className="text-lg font-medium">7. ¿Cuánto estarías dispuesto a pagar por una suscripción mensual que cumpla con tus expectativas?</legend>
-              <RadioGroup required name="entry.369716536" className="flex flex-col space-y-2">
+              <RadioGroup required name="entry.369716536" className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2">
                 {[
                   "Gratis (con anuncios)",
                   "Hasta $49 MXN (cubriría actualizaciones básicas)",
@@ -156,7 +156,7 @@ export default function EncuestaForm({ className }: EncuestaFormProps) {
             {/* 8. Tipo de pago */}
             <fieldset className="space-y-3">
               <legend className="text-lg font-medium">8. ¿Preferirías un pago único, suscripción mensual o anual?</legend>
-              <RadioGroup required name="entry.230700242" className="flex flex-col space-y-2">
+              <RadioGroup required name="entry.230700242" className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2">
                 {["Pago único", "Suscripción mensual", "Suscripción anual (con descuento)"].map((opt) => (
                   <div key={opt} className="flex items-center space-x-2">
                     <RadioGroupItem value={opt} id={`payment-type-${opt.replace(/\s+/g, '-')}`} />
@@ -169,7 +169,7 @@ export default function EncuestaForm({ className }: EncuestaFormProps) {
             {/* 9. Importancia de la personalización */}
             <fieldset className="space-y-3">
               <legend className="text-lg font-medium">9. ¿Cómo valorarías la importancia de la personalización real en tu plan de dieta y ejercicio?</legend>
-              <RadioGroup required name="entry.2046814307" className="flex flex-col space-y-2">
+              <RadioGroup required name="entry.2046814307" className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2">
                 {["Nada importante", "Poco importante", "Moderadamente importante", "Muy importante"].map((opt) => (
                   <div key={opt} className="flex items-center space-x-2">
                     <RadioGroupItem value={opt} id={`personalization-${opt.replace(/\s+/g, '-')}`} />
@@ -182,7 +182,7 @@ export default function EncuestaForm({ className }: EncuestaFormProps) {
             {/* 10. Interés en sugerir rutas a gimnasios */}
             <fieldset className="space-y-3">
               <legend className="text-lg font-medium">10. ¿Te gustaría que la aplicación sugiriera rutas a gimnasios o espacios para entrenar cerca de ti?</legend>
-              <RadioGroup required name="entry.1566811163" className="flex flex-col space-y-2">
+              <RadioGroup required name="entry.1566811163" className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2">
                 {["Sí, pero solo si están cerca de mi casa o trabajo", "No me interesa esa función", "Sí, pero solo sugerencias basadas en distancia o tipo de espacio"].map((opt) => (
                   <div key={opt} className="flex items-center space-x-2">
                     <RadioGroupItem value={opt} id={`routes-${opt.replace(/\s+/g, '-')}`} />
@@ -195,7 +195,7 @@ export default function EncuestaForm({ className }: EncuestaFormProps) {
             {/* 11. Historial de progreso con IA */}
             <fieldset className="space-y-3">
               <legend className="text-lg font-medium">11. ¿Te gustaría que la aplicación guardara tu historial de progreso y actualizara tu dieta y ejercicios semanalmente con ayuda de inteligencia artificial?</legend>
-              <RadioGroup required name="entry.2049304383" className="flex flex-col space-y-2">
+              <RadioGroup required name="entry.2049304383" className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2">
                 {["Sí, eso me motivaría", "Me interesa, pero no es esencial", "No me interesa"].map((opt) => (
                   <div key={opt} className="flex items-center space-x-2">
                     <RadioGroupItem value={opt} id={`history-${opt.replace(/\s+/g, '-')}`} />
@@ -208,7 +208,7 @@ export default function EncuestaForm({ className }: EncuestaFormProps) {
             {/* 12. Importancia de ver progreso */}
             <fieldset className="space-y-3">
               <legend className="text-lg font-medium">12. ¿Qué tan importante es para ti poder ver tu progreso dentro de la app?</legend>
-              <RadioGroup required name="entry.1004635038" className="flex flex-col space-y-2">
+              <RadioGroup required name="entry.1004635038" className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2">
                 {["Nada importante", "Poco importante", "Moderadamente importante", "Muy importante"].map((opt) => (
                   <div key={opt} className="flex items-center space-x-2">
                     <RadioGroupItem value={opt} id={`progress-${opt.replace(/\s+/g, '-')}`} />
@@ -221,7 +221,7 @@ export default function EncuestaForm({ className }: EncuestaFormProps) {
             {/* 13. Compartir datos */}
             <fieldset className="space-y-3">
               <legend className="text-lg font-medium">13. ¿Estarías dispuesto(a) a compartir datos como tu ubicación o hábitos diarios para mejorar las recomendaciones personalizadas?</legend>
-              <RadioGroup required name="entry.1729868495" className="flex flex-col space-y-2">
+              <RadioGroup required name="entry.1729868495" className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2">
                 {["Sí, si es para mejorar mi experiencia", "Tal vez, dependiendo de la privacidad", "No, prefiero no compartir datos"].map((opt) => (
                   <div key={opt} className="flex items-center space-x-2">
                     <RadioGroupItem value={opt} id={`share-${opt.replace(/\s+/g, '-')}`} />
