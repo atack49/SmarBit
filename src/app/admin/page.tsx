@@ -1,85 +1,77 @@
 "use client";
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import ModalDashboard from "./components/ModalDashboard";
 import QuejaSugerenciaList from "./components/QuejaSugerenciaList";
-import QuejaSugerenciaModal from "./components/QuejaSugerenciaModal";
 import InboxQuejasSugerencias from "./components/InboxQuejasSugerencias";
+import QuejaSugerenciaModal from "./components/QuejaSugerenciaModal";
 import { QuejaSugerencia } from "./types";
 import { BarChart3 } from "lucide-react";
+import { useQuejaSugerencia } from "./hooks/useQuejaSugerencia";
 
-const API_URL = "http://localhost:3000/MyFitGuide/queja-sugerencia";
-
-// COLORES GLOBALES
 const PRIMARY_GREEN = "#22C55E";
 const DARK = "#20242a";
 const WHITE = "#fff";
 
-export default function AdminPage() {
-  const [data, setData] = useState<QuejaSugerencia[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [updating, setUpdating] = useState(false);
-  const [selected, setSelected] = useState<QuejaSugerencia | null>(null);
-  const [modalLoading, setModalLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [dashboardOpen, setDashboardOpen] = useState(false);
-
-  const prevNuevosRef = useRef<string[]>([]);
-
-  // Polling solo para inbox y tabla, cada 8s
+// Polling SOLO para el inbox
+function useInboxPolling() {
+  const [inbox, setInbox] = useState<QuejaSugerencia[]>([]);
+  const API_URL = "http://localhost:3000/MyFitGuide/queja-sugerencia";
   useEffect(() => {
-    let interval: NodeJS.Timeout | null = null;
-    let mounted = true;
-    const fetchData = async (showLoader = false) => {
-      if (!mounted) return;
-      if (showLoader) setLoading(true);
-      else setUpdating(true);
+    let active = true;
+    async function fetchInbox() {
       try {
         const res = await fetch(API_URL);
-        if (!res.ok) throw new Error("Error al cargar los datos");
         const json = await res.json();
-        setData(json);
-
-        // Aquí puedes disparar un sonido/toast si hay nuevos
-        const nuevosIds = json.filter((q: QuejaSugerencia) => q.estado === "nuevo").map((q: QuejaSugerencia) => q._id);
-        prevNuevosRef.current = nuevosIds;
-      } catch {
-        setError("No se pudo obtener la información.");
-      } finally {
-        setLoading(false);
-        setUpdating(false);
-      }
-    };
-
-    fetchData(true);
-    interval = setInterval(() => fetchData(false), 8000);
+        if (active) setInbox(json);
+      } catch {}
+    }
+    fetchInbox();
+    const interval = setInterval(fetchInbox, 8000);
     return () => {
-      mounted = false;
-      if (interval) clearInterval(interval);
+      active = false;
+      clearInterval(interval);
     };
   }, []);
+  return { inbox };
+}
 
-  const handleSelect = (item: QuejaSugerencia) => setSelected(item);
+export default function AdminPage() {
+  // Hook para la tabla principal
+  const {
+    data,
+    loading,
+    updating,
+    error,
+    updateQuejaSugerencia,
+    refresh,
+  } = useQuejaSugerencia();
 
-  const handleUpdate = async (estado: string, respuesta: string) => {
-    if (!selected) return;
+  // Hook para inbox (polling)
+  const { inbox } = useInboxPolling();
+
+  // Solo los que NO son "nuevo" para la tabla principal
+  const listData = data.filter(q => q.estado !== "nuevo");
+
+  // Estado modal de tabla
+  const [selected, setSelected] = useState<QuejaSugerencia | null>(null);
+  const [modalLoading, setModalLoading] = useState(false);
+  const [dashboardOpen, setDashboardOpen] = useState(false);
+
+  // Actualiza estado desde cualquier modal, refresca tabla/inbox
+  const handleUpdate = async (id: string, estado: string, respuesta: string) => {
     setModalLoading(true);
-    setError("");
-    try {
-      const res = await fetch(`${API_URL}/${selected._id}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ estado, respuesta }),
-      });
-      if (!res.ok) throw new Error("Error al actualizar");
-      // Refresca los datos después de modificar
-      const resData = await fetch(API_URL);
-      setData(await resData.json());
-      setSelected(null);
-    } catch {
-      setError("No se pudo actualizar la queja/sugerencia.");
-    } finally {
-      setModalLoading(false);
+    const ok = await updateQuejaSugerencia(id, estado, respuesta);
+    setModalLoading(false);
+    if (ok) {
+      refresh();
     }
+    return ok;
+  };
+
+  // Para el modal de la tabla principal
+  const handleUpdateTable = async (estado: string, respuesta: string) => {
+    if (!selected) return false;
+    return handleUpdate(selected._id, estado, respuesta);
   };
 
   return (
@@ -90,7 +82,11 @@ export default function AdminPage() {
         minHeight: "100vh",
       }}
     >
-      <InboxQuejasSugerencias data={data} onSelect={handleSelect} />
+      {/* Inbox SOLO para nuevos, categoriza a "en revisión" */}
+      <InboxQuejasSugerencias
+        data={inbox}
+        onUpdate={handleUpdate}
+      />
 
       <header className="sticky top-0 z-30 shadow-md mb-10 bg-white/90 border-b border-gray-100">
         <div className="max-w-5xl mx-auto flex flex-col sm:flex-row justify-between items-center px-4 py-7">
@@ -133,7 +129,6 @@ export default function AdminPage() {
             {error}
           </div>
         )}
-
         {loading ? (
           <div className="flex justify-center items-center py-28 animate-fade-in-fast">
             <svg
@@ -195,7 +190,7 @@ export default function AdminPage() {
                 Actualizando datos...
               </div>
             )}
-            <QuejaSugerenciaList data={data} onSelect={handleSelect} />
+            <QuejaSugerenciaList data={listData} onSelect={setSelected} />
           </div>
         )}
       </main>
@@ -204,8 +199,9 @@ export default function AdminPage() {
         open={!!selected}
         onClose={() => setSelected(null)}
         data={selected}
-        onSubmit={handleUpdate}
+        onSubmit={handleUpdateTable}
         loading={modalLoading}
+        // allowedStates: sólo permite avanzar según tu lógica (ajusta si necesitas)
       />
       <ModalDashboard open={dashboardOpen} onClose={() => setDashboardOpen(false)} data={data} />
 

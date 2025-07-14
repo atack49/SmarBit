@@ -3,20 +3,20 @@ import { QuejaSugerencia } from "../types";
 import EstadoBadge from "./EstadoBadge";
 import { Mail, UserCircle, Lightbulb, AlertTriangle } from "lucide-react";
 
-// Paleta
 const PRIMARY_GREEN = "#22C55E";
 const DARK = "#18181b";
 
+type Estado = "nuevo" | "en revisión" | "respondido" | "cerrado";
 type Props = {
   open: boolean;
   onClose: () => void;
   data: QuejaSugerencia | null;
-  onSubmit: (estado: string, respuesta: string) => Promise<void>;
+  onSubmit: (estado: string, respuesta: string) => Promise<boolean>;
   loading: boolean;
+  allowedStates?: Estado[];
+  forceSimple?: boolean; // Si true, oculta textarea de respuesta
 };
 
-type Estado = "nuevo" | "en revisión" | "respondido" | "cerrado";
-const estados: Estado[] = ["nuevo", "en revisión", "respondido", "cerrado"];
 const tipoIcon: Record<string, JSX.Element> = {
   queja: <AlertTriangle style={{ color: "#e11d48" }} size={38} />,
   sugerencia: <Lightbulb style={{ color: PRIMARY_GREEN }} size={38} />,
@@ -28,6 +28,8 @@ export default function QuejaSugerenciaModal({
   data,
   onSubmit,
   loading,
+  allowedStates,
+  forceSimple = false,
 }: Props) {
   const [estado, setEstado] = useState<Estado>(data?.estado ?? "nuevo");
   const [respuesta, setRespuesta] = useState(data?.respuesta ?? "");
@@ -40,17 +42,19 @@ export default function QuejaSugerenciaModal({
 
   if (!open || !data) return null;
 
-  const editable = !(
-    (data.estado === "respondido" || data.estado === "cerrado") &&
-    estado === data.estado
-  );
+  const isEditable = data.estado !== "cerrado" && data.estado !== "respondido";
   const isRespondido = estado === "respondido";
+  const isRespuestaRequired = isRespondido && !forceSimple;
+
+  // Opciones permitidas (para el inbox solo "en revisión", para la tabla según el flujo)
+  const opcionesEstado: Estado[] = allowedStates || [data.estado as Estado];
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setGuardando(true);
-    await onSubmit(estado, respuesta);
+    const ok = await onSubmit(estado, respuesta);
     setGuardando(false);
+    if (ok) onClose();
   };
 
   return (
@@ -110,41 +114,55 @@ export default function QuejaSugerenciaModal({
                 className="w-full border border-green-200 rounded-lg px-3 py-2 focus:ring-2 focus:ring-green-500 outline-none text-base bg-white font-semibold transition shadow"
                 value={estado}
                 onChange={e => setEstado(e.target.value as Estado)}
-                disabled={loading || guardando || data.estado === "cerrado"}
+                disabled={!isEditable || loading || guardando}
                 required
               >
-                {estados.map(e => (
+                {opcionesEstado.map(e => (
                   <option key={e} value={e}>
                     {e.charAt(0).toUpperCase() + e.slice(1)}
                   </option>
                 ))}
               </select>
             </div>
-            <div>
-              <label className="block mb-1 text-sm font-bold" style={{ color: DARK }}>
-                Respuesta
-              </label>
-              <textarea
-                className="w-full border border-green-200 rounded-lg px-3 py-2 focus:ring-2 focus:ring-green-400 outline-none resize-none bg-white/90 shadow"
-                rows={4}
-                placeholder="Escribe la respuesta para el usuario..."
-                value={respuesta}
-                onChange={e => setRespuesta(e.target.value)}
-                disabled={loading || guardando || data.estado === "cerrado"}
-                maxLength={1000}
-                required={isRespondido}
-                style={{ color: DARK }}
-              />
-              <span className="block text-right text-xs mt-1 font-semibold" style={{ color: "#8bbf92" }}>
-                {respuesta.length}/1000
-              </span>
-            </div>
+            {!forceSimple && (
+              <div>
+                <label className="block mb-1 text-sm font-bold" style={{ color: DARK }}>
+                  Respuesta
+                </label>
+                <textarea
+                  className="w-full border border-green-200 rounded-lg px-3 py-2 focus:ring-2 focus:ring-green-400 outline-none resize-none bg-white/90 shadow"
+                  rows={4}
+                  placeholder="Escribe la respuesta para el usuario..."
+                  value={respuesta}
+                  onChange={e => setRespuesta(e.target.value)}
+                  disabled={!isEditable || !isRespondido || loading || guardando}
+                  maxLength={1000}
+                  required={isRespuestaRequired}
+                  style={{ color: DARK }}
+                />
+                <span className="block text-right text-xs mt-1 font-semibold" style={{ color: "#8bbf92" }}>
+                  {respuesta.length}/1000
+                </span>
+                {isRespuestaRequired && !respuesta.trim() && (
+                  <span className="text-red-500 text-xs font-bold">
+                    Debes ingresar una respuesta antes de guardar y enviar.
+                  </span>
+                )}
+              </div>
+            )}
             <button
               className={`bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white rounded-2xl px-4 py-2 w-full font-extrabold mt-2 shadow-2xl tracking-widest text-lg transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-green-400 active:scale-[.98] ${
-                loading || guardando || data.estado === "cerrado" ? "opacity-60 cursor-not-allowed" : ""
+                loading || guardando || !isEditable || (isRespuestaRequired && !respuesta.trim())
+                  ? "opacity-60 cursor-not-allowed"
+                  : ""
               }`}
               type="submit"
-              disabled={loading || guardando || data.estado === "cerrado" || (isRespondido && !respuesta.trim())}
+              disabled={
+                loading ||
+                guardando ||
+                !isEditable ||
+                (isRespuestaRequired && !respuesta.trim())
+              }
             >
               {(loading || guardando) ? (
                 <span className="inline-flex items-center gap-2">
