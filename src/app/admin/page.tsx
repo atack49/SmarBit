@@ -1,11 +1,11 @@
 "use client";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import ModalDashboard from "./components/ModalDashboard";
 import QuejaSugerenciaList from "./components/QuejaSugerenciaList";
 import InboxQuejasSugerencias from "./components/InboxQuejasSugerencias";
 import QuejaSugerenciaModal from "./components/QuejaSugerenciaModal";
 import { QuejaSugerencia } from "./types";
-import { BarChart3, LogOut } from "lucide-react";
+import { BarChart3, LogOut, Camera, User2 } from "lucide-react";
 import { useQuejaSugerencia } from "./hooks/useQuejaSugerencia";
 import { useAdminAuth } from "./context/AdminAuthContext";
 import AdminLogin from "./components/AdminLogin";
@@ -16,10 +16,13 @@ const DARK = "#20242a";
 const WHITE = "#fff";
 
 export default function AdminPage() {
-  const { admin, loading: authLoading, logout } = useAdminAuth();
+  const { admin, loading: authLoading, logout, updateFoto } = useAdminAuth();
   const [modalLoading, setModalLoading] = useState(false);
   const [dashboardOpen, setDashboardOpen] = useState(false);
   const [selected, setSelected] = useState<QuejaSugerencia | null>(null);
+  const [uploading, setUploading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Estado local para controlar el flujo tras verificación
   const [verificationPassed, setVerificationPassed] = useState(false);
@@ -37,9 +40,55 @@ export default function AdminPage() {
   const inbox = data.filter(q => q.estado === "nuevo");
   const listData = data.filter(q => q.estado !== "nuevo");
 
-  /**
-   * Actualiza una queja/sugerencia
-   */
+  // ------------------- MANEJO DE FOTO (BASE64) -------------------
+  const handlePhotoClick = () => {
+    if (fileInputRef.current) fileInputRef.current.click();
+  };
+
+  const fileToBase64 = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = error => reject(error);
+      reader.readAsDataURL(file);
+    });
+  };
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setError(null);
+
+    if (!file.type.startsWith("image/") || file.size > 3 * 1024 * 1024) {
+      setError("Selecciona una imagen válida (máx. 3MB)");
+      return;
+    }
+
+    setUploading(true);
+
+    try {
+      const base64 = await fileToBase64(file);
+      const res = await fetch(`http://localhost:3000/MyFitGuide/admin/${admin?._id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ foto: base64 }),
+      });
+      const data = await res.json();
+
+      if (!res.ok || !data.foto) {
+        setError(data.message || "No se pudo actualizar la foto.");
+        setUploading(false);
+        return;
+      }
+      updateFoto(data.foto);
+    } catch (err) {
+      setError("Error de red al subir la foto.");
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  // ------------------- FUNCIONES QUE FALTABAN -------------------
   const handleUpdate = async (id: string, estado: string, respuesta: string) => {
     setModalLoading(true);
     const ok = await updateQuejaSugerencia(id, estado, respuesta);
@@ -48,17 +97,12 @@ export default function AdminPage() {
     return ok;
   };
 
-  /**
-   * Actualiza desde el modal principal
-   */
   const handleUpdateTable = async (estado: string, respuesta: string) => {
     if (!selected) return false;
     return handleUpdate(selected._id, estado, respuesta);
   };
 
-  // ---------------------------
-  // FLUJO DE AUTENTICACIÓN
-  // ---------------------------
+  // ------------------- AUTENTICACIÓN -------------------
   if (authLoading) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen">
@@ -69,11 +113,9 @@ export default function AdminPage() {
   }
 
   if (!admin) {
-    // Login visual (solo si no hay admin en contexto)
     return <AdminLogin onSuccess={() => {}} />;
   }
 
-  // Si el admin no está verificado (token no validado)
   if (!admin.isVerified && !verificationPassed) {
     return (
       <TokenVerification
@@ -83,7 +125,7 @@ export default function AdminPage() {
     );
   }
 
-  // Panel principal (autenticado y verificado)
+  // ------------------- PÁGINA PRINCIPAL -------------------
   return (
     <div
       className="relative min-h-screen overflow-x-hidden"
@@ -94,10 +136,10 @@ export default function AdminPage() {
     >
       <InboxQuejasSugerencias data={inbox} onUpdate={handleUpdate} />
 
-      <header className="sticky top-0 z-30 shadow-md mb-10 bg-white/90 border-b border-gray-100">
-        <div className="max-w-5xl mx-auto flex flex-col sm:flex-row justify-between items-center px-4 py-7">
+      <header className="sticky top-0 z-30 shadow-md mb-12 bg-white/90 border-b border-gray-100">
+        <div className="max-w-5xl mx-auto flex flex-col sm:flex-row justify-between items-center px-4 py-7 gap-6">
           <h1
-            className="text-4xl font-black tracking-tight drop-shadow text-center sm:text-left"
+            className="text-4xl font-black tracking-tight drop-shadow text-center sm:text-left flex-1"
             style={{
               color: DARK,
               letterSpacing: "-.03em",
@@ -106,7 +148,7 @@ export default function AdminPage() {
             Panel de Quejas y{" "}
             <span style={{ color: PRIMARY_GREEN }}>Sugerencias</span>
           </h1>
-          <div className="flex gap-3 items-center mt-5 sm:mt-0">
+          <div className="flex items-center gap-3">
             <button
               className="flex gap-2 items-center px-6 py-2 rounded-2xl font-bold transition text-lg border-2"
               style={{
@@ -120,15 +162,71 @@ export default function AdminPage() {
               <BarChart3 className="w-5 h-5" />
               Dashboard de Quejas
             </button>
-            {/* Botón de cerrar sesión */}
             <button
-              className="flex gap-2 items-center px-4 py-2 rounded-xl bg-gray-50 hover:bg-red-50 border border-gray-200 font-bold text-gray-700 hover:text-red-600 shadow transition ml-2"
+              className="flex gap-2 items-center px-4 py-2 rounded-xl bg-gray-50 hover:bg-red-50 border border-gray-200 font-bold text-gray-700 hover:text-red-600 shadow transition"
               onClick={logout}
               title="Cerrar sesión"
             >
               <LogOut className="w-5 h-5" />
               Salir
             </button>
+
+            {/* ----------- Perfil Admin: EN HEADER, GRANDE, MODERNO ----------- */}
+            <div
+              className={`
+                flex items-center gap-6 bg-white border border-green-100 rounded-2xl
+                shadow-md px-5 py-3 ml-4 min-w-[340px] max-w-[370px] transition-all
+                relative
+              `}
+              style={{
+                minHeight: "118px",
+                boxShadow: "0 2px 18px #22c55e11",
+              }}
+            >
+              <div className="relative flex-shrink-0">
+                <div
+                  className="rounded-full w-24 h-24 bg-gradient-to-br from-green-100 via-white to-white flex items-center justify-center border-2 border-green-200 shadow-lg cursor-pointer hover:opacity-90 transition group"
+                  onClick={handlePhotoClick}
+                  title="Cambiar foto de perfil"
+                  style={{ overflow: "hidden" }}
+                >
+                  {admin.foto ? (
+                    <img
+                      src={admin.foto}
+                      alt="Foto de perfil"
+                      className="w-full h-full object-cover object-center rounded-full"
+                    />
+                  ) : (
+                    <User2 className="w-16 h-16 text-green-400" />
+                  )}
+                  <span className="absolute bottom-2 right-2 bg-green-600 p-2 rounded-full shadow text-white group-hover:scale-110 transition">
+                    <Camera className="w-5 h-5" />
+                  </span>
+                </div>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={handleFileChange}
+                  disabled={uploading}
+                />
+              </div>
+              <div className="flex flex-col justify-center flex-1 min-w-[120px]">
+                <div className="text-base font-black text-green-900 break-all">{admin.correo}</div>
+                <div className="text-sm font-semibold text-green-700 mt-0.5">
+                  Rol: <span className="text-green-600 font-bold">{admin.rol}</span>
+                </div>
+                {uploading && (
+                  <div className="mt-2 text-green-700 font-semibold text-xs animate-pulse">
+                    Actualizando foto...
+                  </div>
+                )}
+                {error && (
+                  <div className="mt-2 text-red-600 font-semibold text-xs">{error}</div>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </header>

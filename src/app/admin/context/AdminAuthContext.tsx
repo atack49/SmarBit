@@ -10,6 +10,7 @@ interface AuthContextType {
   login: (correo: string, contrasena: string) => Promise<boolean>;
   verify: (correo: string, token: string) => Promise<boolean>;
   logout: () => void;
+  updateFoto: (url: string) => void;
 }
 
 // Crea el contexto
@@ -93,6 +94,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }
 
   /**
+   * Actualiza solo la foto del admin en contexto
+   */
+  function updateFoto(url: string) {
+    setAdmin((prev) => prev ? { ...prev, foto: url } : prev);
+  }
+
+  /**
    * Cierra sesión y limpia errores
    */
   function logout() {
@@ -101,7 +109,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }
 
   return (
-    <AuthContext.Provider value={{ admin, loading, error, login, verify, logout }}>
+    <AuthContext.Provider value={{ admin, loading, error, login, verify, logout, updateFoto }}>
       {children}
     </AuthContext.Provider>
   );
