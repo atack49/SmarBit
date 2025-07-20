@@ -10,6 +10,7 @@ import { useQuejaSugerencia } from "./hooks/useQuejaSugerencia";
 import { useAdminAuth } from "./context/AdminAuthContext";
 import AdminLogin from "./components/AdminLogin";
 import TokenVerification from "./components/TokenVerification";
+import { API_BASE_URL } from "./api/api"; // ✅ Importación de la URL base
 
 const PRIMARY_GREEN = "#22C55E";
 const DARK = "#20242a";
@@ -23,11 +24,8 @@ export default function AdminPage() {
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-
-  // Estado local para controlar el flujo tras verificación
   const [verificationPassed, setVerificationPassed] = useState(false);
 
-  // Hook para la gestión de quejas/sugerencias
   const {
     data,
     loading: dataLoading,
@@ -40,7 +38,6 @@ export default function AdminPage() {
   const inbox = data.filter(q => q.estado === "nuevo");
   const listData = data.filter(q => q.estado !== "nuevo");
 
-  // ------------------- MANEJO DE FOTO (BASE64) -------------------
   const handlePhotoClick = () => {
     if (fileInputRef.current) fileInputRef.current.click();
   };
@@ -68,7 +65,7 @@ export default function AdminPage() {
 
     try {
       const base64 = await fileToBase64(file);
-      const res = await fetch(`http://localhost:3000/MyFitGuide/admin/${admin?._id}`, {
+      const res = await fetch(`${API_BASE_URL}/admin/${admin?._id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ foto: base64 }),
@@ -80,6 +77,7 @@ export default function AdminPage() {
         setUploading(false);
         return;
       }
+
       updateFoto(data.foto);
     } catch (err) {
       setError("Error de red al subir la foto.");
@@ -88,7 +86,6 @@ export default function AdminPage() {
     }
   };
 
-  // ------------------- FUNCIONES QUE FALTABAN -------------------
   const handleUpdate = async (id: string, estado: string, respuesta: string) => {
     setModalLoading(true);
     const ok = await updateQuejaSugerencia(id, estado, respuesta);
@@ -102,7 +99,6 @@ export default function AdminPage() {
     return handleUpdate(selected._id, estado, respuesta);
   };
 
-  // ------------------- AUTENTICACIÓN -------------------
   if (authLoading) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen">
@@ -125,7 +121,6 @@ export default function AdminPage() {
     );
   }
 
-  // ------------------- PÁGINA PRINCIPAL -------------------
   return (
     <div
       className="relative min-h-screen overflow-x-hidden"
@@ -140,10 +135,7 @@ export default function AdminPage() {
         <div className="max-w-5xl mx-auto flex flex-col sm:flex-row justify-between items-center px-4 py-7 gap-6">
           <h1
             className="text-4xl font-black tracking-tight drop-shadow text-center sm:text-left flex-1"
-            style={{
-              color: DARK,
-              letterSpacing: "-.03em",
-            }}
+            style={{ color: DARK, letterSpacing: "-.03em" }}
           >
             Panel de Quejas y{" "}
             <span style={{ color: PRIMARY_GREEN }}>Sugerencias</span>
@@ -171,17 +163,9 @@ export default function AdminPage() {
               Salir
             </button>
 
-            {/* ----------- Perfil Admin: EN HEADER, GRANDE, MODERNO ----------- */}
             <div
-              className={`
-                flex items-center gap-6 bg-white border border-green-100 rounded-2xl
-                shadow-md px-5 py-3 ml-4 min-w-[340px] max-w-[370px] transition-all
-                relative
-              `}
-              style={{
-                minHeight: "118px",
-                boxShadow: "0 2px 18px #22c55e11",
-              }}
+              className={`flex items-center gap-6 bg-white border border-green-100 rounded-2xl shadow-md px-5 py-3 ml-4 min-w-[340px] max-w-[370px] transition-all relative`}
+              style={{ minHeight: "118px", boxShadow: "0 2px 18px #22c55e11" }}
             >
               <div className="relative flex-shrink-0">
                 <div
@@ -239,26 +223,9 @@ export default function AdminPage() {
         )}
         {dataLoading ? (
           <div className="flex justify-center items-center py-28 animate-fade-in-fast">
-            <svg
-              className="animate-spin mr-2"
-              width="38"
-              height="38"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <circle
-                cx="12"
-                cy="12"
-                r="10"
-                stroke="#b4e9c1"
-                strokeWidth="4"
-                opacity="0.25"
-              />
-              <path
-                d="M22 12a10 10 0 01-10 10"
-                stroke={PRIMARY_GREEN}
-                strokeWidth="4"
-              />
+            <svg className="animate-spin mr-2" width="38" height="38" fill="none" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="10" stroke="#b4e9c1" strokeWidth="4" opacity="0.25" />
+              <path d="M22 12a10 10 0 01-10 10" stroke={PRIMARY_GREEN} strokeWidth="4" />
             </svg>
             <span className="font-bold text-lg" style={{ color: DARK }}>
               Cargando datos...
@@ -282,6 +249,7 @@ export default function AdminPage() {
           </div>
         )}
       </main>
+
       <QuejaSugerenciaModal
         open={!!selected}
         onClose={() => setSelected(null)}
@@ -289,7 +257,12 @@ export default function AdminPage() {
         onSubmit={handleUpdateTable}
         loading={modalLoading}
       />
-      <ModalDashboard open={dashboardOpen} onClose={() => setDashboardOpen(false)} data={data} />
+
+      <ModalDashboard
+        open={dashboardOpen}
+        onClose={() => setDashboardOpen(false)}
+        data={data}
+      />
 
       <style jsx global>{`
         @keyframes fade-in-fast {

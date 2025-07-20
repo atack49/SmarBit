@@ -1,3 +1,4 @@
+"use client";
 import React, { useState, useEffect } from "react";
 import { QuejaSugerencia } from "../types";
 import EstadoBadge from "./EstadoBadge";
@@ -14,7 +15,7 @@ type Props = {
   onSubmit: (estado: string, respuesta: string) => Promise<boolean>;
   loading: boolean;
   allowedStates?: Estado[];
-  forceSimple?: boolean; // Si true, oculta textarea de respuesta
+  forceSimple?: boolean;
 };
 
 const tipoIcon: Record<string, JSX.Element> = {
@@ -42,12 +43,16 @@ export default function QuejaSugerenciaModal({
 
   if (!open || !data) return null;
 
-  const isEditable = data.estado !== "cerrado" && data.estado !== "respondido";
+  const isEditable = data.estado !== "cerrado";
   const isRespondido = estado === "respondido";
   const isRespuestaRequired = isRespondido && !forceSimple;
 
-  // Opciones permitidas (para el inbox solo "en revisión", para la tabla según el flujo)
-  const opcionesEstado: Estado[] = allowedStates || [data.estado as Estado];
+  // Opciones posibles desde el estado actual
+  const opcionesEstado: Estado[] =
+    allowedStates ||
+    (data.estado === "en revisión"
+      ? ["en revisión", "respondido", "cerrado"]
+      : [data.estado]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -75,7 +80,6 @@ export default function QuejaSugerenciaModal({
             className="absolute right-7 top-6 text-gray-400 hover:text-green-600 text-2xl font-extrabold transition focus:outline-none"
             onClick={onClose}
             aria-label="Cerrar"
-            tabIndex={0}
             type="button"
           >
             ×
@@ -95,7 +99,7 @@ export default function QuejaSugerenciaModal({
           <section className="mb-7 flex flex-wrap items-center gap-4" style={{ color: "#646464" }}>
             <div className="flex items-center gap-1">
               <UserCircle style={{ color: PRIMARY_GREEN }} size={18} />
-              <span className="font-medium text-xs">{data.usuarioId ? data.usuarioId : "Usuario anónimo"}</span>
+              <span className="font-medium text-xs">{data.usuarioId ?? "Usuario anónimo"}</span>
             </div>
             {data.emailContacto && (
               <div className="flex items-center gap-1">
@@ -124,6 +128,7 @@ export default function QuejaSugerenciaModal({
                 ))}
               </select>
             </div>
+
             {!forceSimple && (
               <div>
                 <label className="block mb-1 text-sm font-bold" style={{ color: DARK }}>
@@ -140,7 +145,7 @@ export default function QuejaSugerenciaModal({
                   required={isRespuestaRequired}
                   style={{ color: DARK }}
                 />
-                <span className="block text-right text-xs mt-1 font-semibold" style={{ color: "#8bbf92" }}>
+                <span className="block text-right text-xs mt-1 font-semibold text-green-600">
                   {respuesta.length}/1000
                 </span>
                 {isRespuestaRequired && !respuesta.trim() && (
@@ -150,13 +155,14 @@ export default function QuejaSugerenciaModal({
                 )}
               </div>
             )}
+
             <button
+              type="submit"
               className={`bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white rounded-2xl px-4 py-2 w-full font-extrabold mt-2 shadow-2xl tracking-widest text-lg transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-green-400 active:scale-[.98] ${
                 loading || guardando || !isEditable || (isRespuestaRequired && !respuesta.trim())
                   ? "opacity-60 cursor-not-allowed"
                   : ""
               }`}
-              type="submit"
               disabled={
                 loading ||
                 guardando ||
@@ -164,48 +170,11 @@ export default function QuejaSugerenciaModal({
                 (isRespuestaRequired && !respuesta.trim())
               }
             >
-              {(loading || guardando) ? (
-                <span className="inline-flex items-center gap-2">
-                  <svg
-                    className="animate-spin mr-1"
-                    width="20"
-                    height="20"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                  >
-                    <circle
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      stroke="#fff"
-                      strokeWidth="4"
-                      opacity="0.3"
-                    />
-                    <path
-                      d="M22 12a10 10 0 01-10 10"
-                      stroke="#fff"
-                      strokeWidth="4"
-                    />
-                  </svg>
-                  Guardando...
-                </span>
-              ) : "Guardar y Enviar"}
+              {(loading || guardando) ? "Guardando..." : "Guardar y Enviar"}
             </button>
           </form>
         </div>
       </div>
-      <style jsx global>{`
-        @keyframes dashboard-pop {
-          0% { opacity: 0; transform: scale(.93);}
-          100% { opacity: 1; transform: scale(1);}
-        }
-        .animate-dashboard-pop { animation: dashboard-pop .19s cubic-bezier(.44,1.3,.49,1);}
-        .animate-fade-in { animation: fade-in .14s;}
-        @keyframes fade-in {
-          0% { opacity: 0;}
-          100% { opacity: 1;}
-        }
-      `}</style>
     </div>
   );
 }

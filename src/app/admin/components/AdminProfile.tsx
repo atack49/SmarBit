@@ -1,8 +1,8 @@
-// AdminProfile.tsx
 "use client";
 import React, { useRef, useState } from "react";
 import { useAdminAuth } from "../context/AdminAuthContext";
 import { Camera, User2 } from "lucide-react";
+import { API_BASE_URL } from "../api/api"; // ✅ Importa la URL base centralizada
 
 export default function AdminProfile() {
   const { admin, updateFoto } = useAdminAuth();
@@ -13,7 +13,7 @@ export default function AdminProfile() {
   if (!admin) return null;
 
   const handlePhotoClick = () => {
-    if (fileInputRef.current) fileInputRef.current.click();
+    fileInputRef.current?.click();
   };
 
   const fileToBase64 = (file: File): Promise<string> => {
@@ -39,7 +39,7 @@ export default function AdminProfile() {
 
     try {
       const base64 = await fileToBase64(file);
-      const res = await fetch(`http://localhost:3000/MyFitGuide/admin/${admin._id}`, {
+      const res = await fetch(`${API_BASE_URL}/admin/${admin._id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ foto: base64 }),
@@ -51,6 +51,7 @@ export default function AdminProfile() {
         setUploading(false);
         return;
       }
+
       updateFoto(data.foto);
     } catch (err) {
       setError("Error de red al subir la foto.");
@@ -63,13 +64,12 @@ export default function AdminProfile() {
     <div
       className={`
         flex items-center gap-6 bg-white border border-green-100 rounded-2xl
-        shadow-md p-5 mt-2 mb-5 w-full max-w-xl
-        transition-all
+        shadow-md p-5 mt-2 mb-5 w-full max-w-xl transition-all
       `}
       style={{
         minHeight: "110px",
         marginLeft: 0,
-        boxShadow: "0 2px 18px #22c55e11"
+        boxShadow: "0 2px 18px #22c55e11",
       }}
     >
       <div className="relative flex-shrink-0">
