@@ -2,7 +2,7 @@
 import React, { useRef, useState } from "react";
 import { useAdminAuth } from "../context/AdminAuthContext";
 import { Camera, User2 } from "lucide-react";
-import { API_BASE_URL } from "../api/api"; // ✅ Importa la URL base centralizada
+import { API_BASE_URL } from "../api/api";
 
 export default function AdminProfile() {
   const { admin, updateFoto } = useAdminAuth();

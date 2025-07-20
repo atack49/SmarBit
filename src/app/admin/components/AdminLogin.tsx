@@ -13,10 +13,9 @@ const AdminLogin: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
   const { login, error, loading } = useAdminAuth();
   const [correo, setCorreo] = useState("");
   const [contrasena, setContrasena] = useState("");
-  const [touched, setTouched] = useState(false); // Para mostrar error solo tras intentar login
-  const [showPassword, setShowPassword] = useState(false); // NUEVO: Para ver la contraseña
+  const [touched, setTouched] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
-  // Envía el formulario y espera respuesta del login
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setTouched(true);
@@ -43,7 +42,7 @@ const AdminLogin: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
           </p>
         </div>
         <div className="flex flex-col gap-3">
-          {/* Campo correo */}
+
           <div>
             <label className="block mb-1 text-sm font-semibold text-gray-600">
               Correo electrónico
@@ -61,7 +60,7 @@ const AdminLogin: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
               />
             </div>
           </div>
-          {/* Campo contraseña */}
+
           <div>
             <label className="block mb-1 text-sm font-semibold text-gray-600">
               Contraseña

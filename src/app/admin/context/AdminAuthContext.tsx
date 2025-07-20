@@ -1,3 +1,4 @@
+//Context para guardar el estado global de los inicios de sesion de usuarios
 "use client";
 import React, { createContext, useContext, useState } from "react";
 import { Admin } from "../types/admin.d";

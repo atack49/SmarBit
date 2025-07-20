@@ -1,3 +1,4 @@
+//Text inbox para nuevas quejas y sugerencias de parte de los usuarios hacia el equipo de administrador de MyFitGuide
 import React, { useState } from "react";
 import { QuejaSugerencia } from "../types";
 import EstadoBadge from "./EstadoBadge";
@@ -6,11 +7,10 @@ import { AlertTriangle, Lightbulb, ChevronRight, Inbox, ChevronDown, ChevronUp }
 
 const PRIMARY_GREEN = "#22C55E";
 const DARK = "#18181b";
-const PAGE_SIZE = 5; // Elementos por página
+const PAGE_SIZE = 5;
 
-// Definición de tipos de estado
 type Estado = "nuevo" | "en revisión" | "respondido" | "cerrado";
-// Type guard para asegurar arrays de tipo Estado[]
+
 function isEstado(val: string): val is Estado {
   return ["nuevo", "en revisión", "respondido", "cerrado"].includes(val);
 }
@@ -20,7 +20,7 @@ type Props = {
   onUpdate: (id: string, estado: string, respuesta: string) => Promise<boolean>;
 };
 
-// Icono dinámico según tipo de registro
+
 const tipoIcon = (tipo: string) =>
   tipo === "queja" ? (
     <AlertTriangle className="w-5 h-5" style={{ color: "#e11d48" }} />
@@ -29,7 +29,7 @@ const tipoIcon = (tipo: string) =>
   );
 
 export default function InboxQuejasSugerencias({ data, onUpdate }: Props) {
-  // Solo estado "nuevo"
+
   const nuevos = data
     .filter((item) => item.estado === "nuevo")
     .sort((a, b) =>
@@ -38,25 +38,24 @@ export default function InboxQuejasSugerencias({ data, onUpdate }: Props) {
         : 0
     );
 
-  // Estado para abrir/cerrar (minimizar/maximizar)
-  const [open, setOpen] = useState(true);
-  // Estado de paginación
+
+    const [open, setOpen] = useState(true);
+
   const [page, setPage] = useState(0);
   const maxPage = Math.max(0, Math.ceil(nuevos.length / PAGE_SIZE) - 1);
-  // Estado para modal
+ 
   const [selected, setSelected] = useState<QuejaSugerencia | null>(null);
   const [modalLoading, setModalLoading] = useState(false);
 
-  // Cambio de página resetea selección
   const handlePageChange = (newPage: number) => {
     setPage(newPage);
     setSelected(null);
   };
 
-  // Muestra solo los de la página actual
+ 
   const paged = nuevos.slice(page * PAGE_SIZE, page * PAGE_SIZE + PAGE_SIZE);
 
-  // Handler para pasar a en revisión
+ 
   const handleUpdate = async (estado: string, respuesta: string) => {
     if (!selected) return false;
     setModalLoading(true);
@@ -219,7 +218,7 @@ export default function InboxQuejasSugerencias({ data, onUpdate }: Props) {
           </>
         )}
       </div>
-      {/* Modal para categorizar a "en revisión" */}
+
       <QuejaSugerenciaModal
         open={!!selected}
         onClose={() => setSelected(null)}
@@ -233,7 +232,7 @@ export default function InboxQuejasSugerencias({ data, onUpdate }: Props) {
                 .filter((s, i, arr) => arr.indexOf(s) === i)
             : []
         }
-        forceSimple // Oculta textarea de respuesta
+        forceSimple
       />
     </>
   );

@@ -1,3 +1,4 @@
+//Componente de estado de quejas y sugerencias.
 import React from "react";
 import {
   Loader2,

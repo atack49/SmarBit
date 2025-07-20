@@ -1,3 +1,4 @@
+//Pagina principal del modulo de admin
 "use client";
 import React, { useRef, useState } from "react";
 import ModalDashboard from "./components/ModalDashboard";
@@ -10,7 +11,7 @@ import { useQuejaSugerencia } from "./hooks/useQuejaSugerencia";
 import { useAdminAuth } from "./context/AdminAuthContext";
 import AdminLogin from "./components/AdminLogin";
 import TokenVerification from "./components/TokenVerification";
-import { API_BASE_URL } from "./api/api"; // ✅ Importación de la URL base
+import { API_BASE_URL } from "./api/api";
 
 const PRIMARY_GREEN = "#22C55E";
 const DARK = "#20242a";

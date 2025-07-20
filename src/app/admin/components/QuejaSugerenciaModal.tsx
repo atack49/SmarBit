@@ -1,6 +1,7 @@
+//Modal de muestra para quejas y sugerencias con vista intuitiva
 "use client";
 import React, { useState, useEffect } from "react";
-import { QuejaSugerencia } from "../types";
+import { QuejaSugerencia } from "../types/admin.d";
 import EstadoBadge from "./EstadoBadge";
 import { Mail, UserCircle, Lightbulb, AlertTriangle } from "lucide-react";
 
@@ -47,7 +48,7 @@ export default function QuejaSugerenciaModal({
   const isRespondido = estado === "respondido";
   const isRespuestaRequired = isRespondido && !forceSimple;
 
-  // Opciones posibles desde el estado actual
+
   const opcionesEstado: Estado[] =
     allowedStates ||
     (data.estado === "en revisión"

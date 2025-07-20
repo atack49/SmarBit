@@ -4,7 +4,7 @@ import DashboardQuejasSugerencias from "./Dashboard";
 type Props = {
   open: boolean;
   onClose: () => void;
-  data: any[]; // Usa tu tipo real
+  data: any[];
 };
 
 export default function ModalDashboard({ open, onClose, data }: Props) {
