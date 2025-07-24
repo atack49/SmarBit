@@ -1,11 +1,10 @@
 
 import AboutUsSection from '@/components/sections/about-us-section';
 import ContactSection from '@/components/sections/contact-section';
-import CoreFeaturesSection from '@/components/sections/core-features-section'; // Added import
+import CoreFeaturesSection from '@/components/sections/core-features-section';
 import Footer from '@/components/layout/footer';
 import Header from '@/components/layout/header';
 import HeroSection from '@/components/sections/hero-section';
-import MyFitGuideSection from '@/components/sections/my-fit-guide-section';
 
 export default function HomePage() {
   return (
@@ -14,8 +13,7 @@ export default function HomePage() {
       <main className="flex-grow">
         <HeroSection />
         <AboutUsSection /> 
-        <MyFitGuideSection />
-        <CoreFeaturesSection /> {/* Added new section */}
+        <CoreFeaturesSection />
         <ContactSection />
       </main>
       <Footer />

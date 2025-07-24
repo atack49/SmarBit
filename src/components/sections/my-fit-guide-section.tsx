@@ -1,5 +1,4 @@
 
-import EncuestaForm from "@/app/components/EncuestaForm";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
@@ -13,8 +12,6 @@ export default function MyFitGuideSection() {
             Tus respuestas nos ayudan a mejorar y personalizar aún más tu experiencia con MyFitGuide. ¡Toma un momento para completar nuestra encuesta!
           </p>
         </div>
-
-        <EncuestaForm className="shadow-xl" />
 
         <div className="mt-12 text-center">
             <Button asChild>

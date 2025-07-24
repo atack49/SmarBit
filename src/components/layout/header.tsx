@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import Image from 'next/image';
-import { Menu, Download } from 'lucide-react'; 
+import { Menu, Download, FileText } from 'lucide-react'; 
 
 const navItems = [
   { href: '#about', label: 'Sobre nosotros' },
@@ -38,6 +38,12 @@ export default function Header() {
         </nav>
 
         <div className="flex items-center gap-2">
+           <Button asChild className="hidden md:flex bg-secondary hover:bg-secondary/90 text-secondary-foreground">
+            <Link href="/encuesta"> 
+              <FileText className="mr-2 h-5 w-5" />
+              Realizar Encuesta
+            </Link>
+          </Button>
           <Button asChild className="hidden md:flex bg-primary hover:bg-primary/90 text-primary-foreground">
             <Link href="/quick-start"> 
               <Download className="mr-2 h-5 w-5" />
@@ -63,6 +69,13 @@ export default function Header() {
                       {item.label}
                     </Link>
                   ))}
+                  <Link
+                    href="/encuesta"
+                    className="text-lg font-medium text-foreground hover:text-primary flex items-center"
+                  >
+                    <FileText className="mr-2 h-5 w-5" />
+                    Realizar Encuesta
+                  </Link>
                   <Link
                     href="/quick-start" 
                     className="text-lg font-medium text-foreground hover:text-primary flex items-center"
