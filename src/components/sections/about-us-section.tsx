@@ -58,13 +58,13 @@ export default function AboutUsSection() {
           <h3 className="text-2xl font-headline font-bold text-primary mb-8">Nuestro Equipo (DR)</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-8">
             {[
-              { name: 'Diego Alberto Osorio Lopez', role: 'Leader/Programmer' },
-              { name: 'Paola Itzel Rueda Hernandez', role: 'Programador' },
-              { name: 'Kevin Yael Rosales García', role: 'Tester' },
-              { name: 'Jorge Alberto Velez Mendez', role: 'Admin. de base de datos' },
-              { name: 'Francisco Axel Mercado Sierra', role: 'Programador' },
-              { name: 'Luis Angel Reyes Esquivel', role: 'Tester' },
-              { name: 'Zereh A. Rodríguez Albarrán', role: 'Admin. de base de datos' },
+              { name: 'Osorio Lopez Diego Alberto', role: 'Líder de proyecto y Desarrollador móvil' },
+              { name: 'Rodríguez Albarrán Zereh Alondra', role: 'Proyect manager' },
+              { name: 'Rueda Hernández Paola Itzel', role: 'Desarrollador backend' },
+              { name: 'Rosales García Kevin Yael', role: 'Desarrollador web' },
+              { name: 'Vélez Méndez Jorge Alberto', role: 'Administrador de base de datos' },
+              { name: 'Mercado Sierra Francisco Axel', role: 'Auxiliar desarrollador web' },
+              { name: 'Esquivel Reyes Luis Angel', role: 'Auxiliar administrador de base de datos' },
             ].map((member, index) => (
               <div key={index} className="flex flex-col items-center">
                 {/* Placeholder for potential team member images */}
