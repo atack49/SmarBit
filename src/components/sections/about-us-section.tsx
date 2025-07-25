@@ -12,14 +12,17 @@ export default function AboutUsSection() {
             <p className="leading-relaxed">
             tiene como objeto social el desarrollo, comercialización y mantenimiento de software basado en inteligencia artificial, así como la creación de soluciones tecnológicas en salud y bienestar.
             </p>
-            <p className="leading-relaxed">
-            Como proyecto inicial, la empresa desarrollará una aplicación basada en inteligencia artificial que diseñará planes de alimentación y ejercicio, proporcionando recomendaciones geográficas y ajuste de presupuestos personalizados según las necesidades del usuario.
-            </p>
           </div>
         </div>
 
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div>
+            <div className="mb-8">
+              <h3 className="text-2xl font-headline font-bold text-primary">MyFitGuide</h3>
+              <p className="mt-2 text-lg text-foreground/80">
+                Aplicación diseñada para generar dietas y rutinas personalizadas.
+              </p>
+            </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <Card className="bg-primary/5 border-primary/20">
                 <CardHeader className="flex flex-row items-center gap-3 pb-2">
