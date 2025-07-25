@@ -75,7 +75,7 @@ const featuresData: Feature[] = [
 
 export default function CoreFeaturesSection() {
   return (
-    <section id="core-features" className="py-16 md:py-24 bg-muted">
+    <section id="core-features" className="py-16 md:py-24 bg-background">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-headline font-bold text-primary sm:text-4xl">
@@ -87,7 +87,7 @@ export default function CoreFeaturesSection() {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
           {featuresData.map((feature) => (
-            <Card key={feature.title} className="flex flex-col shadow-lg rounded-xl h-full bg-card">
+            <Card key={feature.title} className="flex flex-col shadow-lg rounded-xl h-full bg-card border-primary/10 hover:border-primary/30 transition-all duration-300">
               <CardHeader>
                 <div className="mb-3">
                   <feature.icon className="w-10 h-10 text-primary" />
