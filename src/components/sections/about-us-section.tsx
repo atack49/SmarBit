@@ -10,7 +10,7 @@ export default function AboutUsSection() {
           <h2 className="text-3xl font-headline font-bold text-primary sm:text-4xl">A cerca de SmartBit</h2>
           <div className="mt-4 text-lg text-foreground/80 max-w-2xl mx-auto space-y-4">
             <p className="leading-relaxed">
-            tiene como objeto social el desarrollo, comercialización y mantenimiento de software basado en inteligencia artificial, así como la creación de soluciones tecnológicas en salud y bienestar.
+            Tiene como objeto social el desarrollo, comercialización y mantenimiento de software basado en inteligencia artificial, así como la creación de soluciones tecnológicas en salud y bienestar.
             </p>
           </div>
         </div>
