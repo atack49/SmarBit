@@ -1,3 +1,4 @@
+
 import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Zap, Brain } from 'lucide-react';
@@ -7,10 +8,10 @@ export default function AboutUsSection() {
     <section id="about" className="py-16 md:py-24 bg-background">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-headline font-bold text-primary sm:text-4xl">A cerca de SmartBit</h2>
+          <h2 className="text-3xl font-headline font-bold text-primary sm:text-4xl">Domina tu Fitness con MyFitGuide</h2>
           <div className="mt-4 text-lg text-foreground/80 max-w-2xl mx-auto space-y-4">
             <p className="leading-relaxed">
-            Tiene como objeto social el desarrollo, comercialización y mantenimiento de software basado en inteligencia artificial, así como la creación de soluciones tecnológicas en salud y bienestar.
+              Aprende a usar todas las funcionalidades de MyFitGuide para alcanzar tus objetivos de fitness. Desde configuración inicial hasta funciones avanzadas.
             </p>
           </div>
         </div>
