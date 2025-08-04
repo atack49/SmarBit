@@ -1,4 +1,3 @@
-
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
@@ -6,8 +5,8 @@ import Image from 'next/image';
 import { Menu, Download, FileText } from 'lucide-react'; 
 
 const navItems = [
-  { href: '#about', label: 'Sobre nosotros' },
   { href: '#myfitguide', label: 'MyFitGuide' },
+  { href: '#about', label: 'Sobre nosotros' },
   { href: '#contact', label: 'Contacto' },
 ];
 

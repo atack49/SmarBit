@@ -44,21 +44,27 @@ export default function AboutUsSection() {
               </Card>
             </div>
           </div>
-           <div className="flex justify-center">
-            <Image
-              src="https://static.wixstatic.com/media/caedac_408a6c844bed4dfdb4e7a157abc59687~mv2.jpg/v1/fill/w_1354,h_766,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/WhatsApp%20Image%202025-03-19%20at%2017_11_edite.jpg"
-              alt="SmartBit Team"
-              width={500}
-              height={350}
-              className="rounded-xl shadow-lg"
-              data-ai-hint="team collaboration"
-            />
+          <div className="hidden md:flex justify-center">
+            {/* Image is now below */}
           </div>
         </div>
 
         {/* Team Section (DR) */}
         <div className="mt-16 text-center">
           <h3 className="text-2xl font-headline font-bold text-primary mb-8">Nuestro Equipo (DR)</h3>
+          <p className="text-lg text-foreground/80 max-w-3xl mx-auto mb-10">
+          Un equipo de estudiantes de la Universidad Tecnológica del Valle de Toluca, apasionados por la tecnología y la innovación, dedicados a crear soluciones que marcan la diferencia.
+          </p>
+           <div className="flex justify-center mb-10">
+            <Image
+              src="https://static.wixstatic.com/media/caedac_408a6c844bed4dfdb4e7a157abc59687~mv2.jpg/v1/fill/w_1354,h_766,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/WhatsApp%20Image%202025-03-19%20at%2017_11_edite.jpg"
+              alt="SmartBit Team"
+              width={600}
+              height={400}
+              className="rounded-xl shadow-lg"
+              data-ai-hint="team collaboration"
+            />
+          </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-8">
             {[
               { name: 'Osorio Lopez Diego Alberto', role: 'Líder de proyecto y Desarrollador móvil' },
