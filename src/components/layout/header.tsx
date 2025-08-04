@@ -16,7 +16,7 @@ export default function Header() {
       <div className="container flex h-16 max-w-screen-2xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link href="/" className="flex items-center gap-2" aria-label="SmartBit Home">
           <Image
-            src="/logoem.jpeg"
+            src="/assets/logoem.jpeg"
             alt="SmartBit Logo"
             width={128}
             height={128}
