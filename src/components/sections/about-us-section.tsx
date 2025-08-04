@@ -1,4 +1,3 @@
-
 import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Zap, Brain } from 'lucide-react';
@@ -8,7 +7,9 @@ export default function AboutUsSection() {
     <section id="about" className="py-16 md:py-24 bg-background">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-headline font-bold text-primary sm:text-4xl">Domina tu Fitness con MyFitGuide</h2>
+          <h2 className="text-4xl font-headline font-bold tracking-tight text-foreground sm:text-5xl md:text-6xl">
+            A cerca de <span className="text-primary">MyfitGuide</span>
+          </h2>
           <div className="mt-4 text-lg text-foreground/80 max-w-2xl mx-auto space-y-4">
             <p className="leading-relaxed">
               Aprende a usar todas las funcionalidades de MyFitGuide para alcanzar tus objetivos de fitness. Desde configuración inicial hasta funciones avanzadas.
@@ -16,15 +17,15 @@ export default function AboutUsSection() {
           </div>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div>
-            <div className="mb-8">
+        {/* Sección de "MyFitGuide" y Cards de Innovación e Inteligencia */}
+        <div className="flex flex-col items-center">
+            <div className="mb-8 text-center max-w-xl">
               <h3 className="text-2xl font-headline font-bold text-primary">MyFitGuide</h3>
               <p className="mt-2 text-lg text-foreground/80">
                 Aplicación diseñada para generar dietas y rutinas personalizadas.
               </p>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-3xl">
               <Card className="bg-primary/5 border-primary/20">
                 <CardHeader className="flex flex-row items-center gap-3 pb-2">
                   <Zap className="w-6 h-6 text-primary" />
@@ -45,10 +46,7 @@ export default function AboutUsSection() {
               </Card>
             </div>
           </div>
-          <div className="hidden md:flex justify-center">
-            {/* Image is now below */}
-          </div>
-        </div>
+
 
         {/* Team Section (DR) */}
         <div className="mt-16 text-center">
