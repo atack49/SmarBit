@@ -16,11 +16,11 @@ export default function Header() {
       <div className="container flex h-16 max-w-screen-2xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link href="/" className="flex items-center gap-2" aria-label="SmartBit Home">
           <Image
-            src="https://static.wixstatic.com/media/caedac_b35e4d7d01234aa2b1151b08164fecc6~mv2.jpg/v1/fill/w_248,h_122,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/caedac_b35e4d7d01234aa2b1151b08164fecc6~mv2.jpg"
+            src="https://storage.googleapis.com/project-spark-312519.appspot.com/generated/19224419-5553-4638-8c10-1d167f08535a.png"
             alt="SmartBit Logo"
-            width={248}
-            height={122}
-            className="h-auto w-32" 
+            width={128}
+            height={128}
+            className="h-10 w-auto"
           />
         </Link>
         
