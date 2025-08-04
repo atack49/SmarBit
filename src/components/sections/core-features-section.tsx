@@ -1,6 +1,6 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Target, CalendarDays, BarChartBig, Users, Smartphone, Star, CheckCircle2 } from 'lucide-react';
+import { Target, CalendarDays, Smartphone, CheckCircle2 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 
 interface Feature {
@@ -32,26 +32,6 @@ const featuresData: Feature[] = [
     ],
   },
   {
-    icon: BarChartBig,
-    title: "Seguimiento de Progreso",
-    description: "Monitorea tu evolución con estadísticas detalladas.",
-    subFeatures: [
-      "Gráficos de progreso",
-      "Historial de entrenamientos",
-      "Métricas corporales",
-    ],
-  },
-  {
-    icon: Users,
-    title: "Comunidad",
-    description: "Conecta con otros usuarios y comparte tu progreso.",
-    subFeatures: [
-      "Grupos de entrenamiento",
-      "Desafíos grupales",
-      "Compartir logros",
-    ],
-  },
-  {
     icon: Smartphone,
     title: "App Móvil",
     description: "Accede a todas las funciones desde tu smartphone.",
@@ -59,16 +39,6 @@ const featuresData: Feature[] = [
       "Modo offline",
       "Sincronización automática",
       "Notificaciones push",
-    ],
-  },
-  {
-    icon: Star,
-    title: "Gamificación",
-    description: "Mantén la motivación con logros y recompensas.",
-    subFeatures: [
-      "Sistema de puntos",
-      "Insignias y logros",
-      "Ranking de usuarios",
     ],
   },
 ];

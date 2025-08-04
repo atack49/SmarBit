@@ -44,7 +44,7 @@ export default function AboutUsSection() {
               </Card>
             </div>
           </div>
-          <div className="flex justify-center">
+           <div className="flex justify-center">
             <Image
               src="https://static.wixstatic.com/media/caedac_408a6c844bed4dfdb4e7a157abc59687~mv2.jpg/v1/fill/w_1354,h_766,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/WhatsApp%20Image%202025-03-19%20at%2017_11_edite.jpg"
               alt="SmartBit Team"
@@ -70,8 +70,6 @@ export default function AboutUsSection() {
               { name: 'Esquivel Reyes Luis Angel', role: 'Auxiliar administrador de base de datos' },
             ].map((member, index) => (
               <div key={index} className="flex flex-col items-center">
-                {/* Placeholder for potential team member images */}
-                {/* <div className="w-20 h-20 bg-gray-300 rounded-full mb-3"></div> */}
                 <p className="font-semibold text-foreground">{member.name}</p>
                 <p className="text-sm text-foreground/70">{member.role}</p>
               </div>
