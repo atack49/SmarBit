@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Zap, Brain } from 'lucide-react';
+import teamImage from '@/app/assets/team.jpg';
 
 export default function AboutUsSection() {
   return (
@@ -56,7 +57,7 @@ export default function AboutUsSection() {
           </p>
            <div className="flex justify-center mb-10">
             <Image
-              src="https://static.wixstatic.com/media/caedac_408a6c844bed4dfdb4e7a157abc59687~mv2.jpg/v1/fill/w_1354,h_766,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/WhatsApp%20Image%202025-03-19%20at%2017_11_edite.jpg"
+              src={teamImage}
               alt="SmartBit Team"
               width={600}
               height={400}
