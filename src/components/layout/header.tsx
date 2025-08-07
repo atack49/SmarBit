@@ -2,7 +2,8 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import Image from 'next/image';
-import { Menu, Download, FileText } from 'lucide-react'; 
+import { Menu, Download, FileText } from 'lucide-react';
+import logo from '@/app/assets/empresalogo.png';
 
 const navItems = [
   { href: '#myfitguide', label: 'MyFitGuide' },
@@ -16,7 +17,7 @@ export default function Header() {
       <div className="container flex h-16 max-w-screen-2xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link href="/" className="flex items-center gap-2" aria-label="SmartBit Home">
           <Image
-            src="/assets/empresalogo.png"
+            src={logo}
             alt="SmartBit Logo"
             width={128}
             height={128}
