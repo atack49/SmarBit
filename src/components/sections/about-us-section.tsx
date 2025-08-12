@@ -58,7 +58,7 @@ export default function AboutUsSection() {
            <div className="flex justify-center mb-10">
             <Image
               src={teamImage}
-              alt="SmartBit Team"
+              alt="MyFitGuide Team"
               width={600}
               height={400}
               className="rounded-xl shadow-lg"

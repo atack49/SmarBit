@@ -3,8 +3,8 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster"; // Import Toaster
 
 export const metadata: Metadata = {
-  title: 'SmartBit "Tú meta, tú plan, tú precio"',
-  description: 'Soluciones impulsadas por IA para la salud y el bienestar de SmartBit.',
+  title: 'MyFitGuide "Tú meta, tú plan, tú precio"',
+  description: 'Planes de dieta y ejercicio personalizados con IA por MyFitGuide.',
 };
 
 export default function RootLayout({

@@ -50,11 +50,18 @@ const RESPUESTAS = {
     compartirDatos: ["Sí, si es para mejorar mi experiencia", "Tal vez, dependiendo de la privacidad", "No, prefiero no compartir datos"],
 };
 
-const initialUsers = [
-    { email: 'admin@smartbit.com', password: 'admin123', role: 'admin' },
-    { email: 'client@smartbit.com', password: 'client123', role: 'client' },
-];
+const initialUsers: {email: string, password: string, role: string}[] = [];
 
+const CustomLegend = ({ payload }: any) => (
+  <ul className="flex flex-col mt-4 space-y-2">
+    {payload.map((entry: any, index: number) => (
+      <li key={`item-${index}`} className="flex items-start text-sm text-foreground/80">
+        <span className="w-3 h-3 mt-1 mr-2 flex-shrink-0" style={{ backgroundColor: entry.color }} />
+        <span className="break-words">{entry.value}</span>
+      </li>
+    ))}
+  </ul>
+);
 
 export default function ResultadosPage() {
   // Auth state
@@ -189,7 +196,7 @@ export default function ResultadosPage() {
             <CardContent className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="email">Correo electrónico</Label>
-                <Input id="email" type="email" placeholder="usuario@smartbit.com" required value={email} onChange={(e) => setEmail(e.target.value)} />
+                <Input id="email" type="email" placeholder="usuario@myfitguide.com" required value={email} onChange={(e) => setEmail(e.target.value)} />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="password">Contraseña</Label>
@@ -211,35 +218,30 @@ export default function ResultadosPage() {
     if (fetchError) return <p className="text-center mt-10 text-destructive">Error: {fetchError}</p>;
 
     const GraficaPastel = ({ titulo, datos }: { titulo: string; datos: { name: string; cantidad: number }[] }) => (
-        <Card>
-          <CardHeader><CardTitle className="text-lg font-semibold text-center">{titulo}</CardTitle></CardHeader>
-          <CardContent>
-            <ResponsiveContainer width="100%" height={300}>
-              <PieChart>
-                <Pie data={datos} dataKey="cantidad" nameKey="name" cx="50%" cy="50%" outerRadius={100} labelLine={false} label={({ cx, cy, midAngle, innerRadius, outerRadius, percent }) => {
-                  const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
-                  const x = cx + radius * Math.cos(-midAngle * (Math.PI / 180));
-                  const y = cy + radius * Math.sin(-midAngle * (Math.PI / 180));
-                  return (<text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">{`${(percent * 100).toFixed(0)}%`}</text>);
-                }}>
-                  {datos.map((_, i) => (<Cell key={`cell-${i}`} fill={COLORS[i % COLORS.length]} />))}
-                </Pie>
-                <Tooltip formatter={(value, name) => [`${value} respuestas`, name]}/>
-                <Legend verticalAlign="bottom" height={36} />
-              </PieChart>
-            </ResponsiveContainer>
-          </CardContent>
-        </Card>
-      );
+      <Card className="flex flex-col">
+        <CardHeader><CardTitle className="text-lg font-semibold text-center">{titulo}</CardTitle></CardHeader>
+        <CardContent className="p-4 flex-grow">
+          <ResponsiveContainer width="100%" height={200}>
+            <PieChart>
+              <Pie data={datos} dataKey="cantidad" nameKey="name" cx="50%" cy="50%" outerRadius={80} fill="#8884d8" labelLine={false}>
+                {datos.map((_, i) => (<Cell key={`cell-${i}`} fill={COLORS[i % COLORS.length]} />))}
+              </Pie>
+              <Tooltip formatter={(value, name) => [`${value} respuestas`, name]}/>
+              <Legend content={<CustomLegend />} verticalAlign="bottom" />
+            </PieChart>
+          </ResponsiveContainer>
+        </CardContent>
+      </Card>
+    );
     
       const GraficaBarras = ({ titulo, datos }: { titulo: string; datos: { name: string; cantidad: number }[] }) => (
         <Card>
           <CardHeader><CardTitle className="text-lg font-semibold text-center">{titulo}</CardTitle></CardHeader>
-          <CardContent>
+          <CardContent className="p-4">
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={datos} margin={{ top: 5, right: 20, left: -10, bottom: 5 }}>
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" tick={{ fontSize: 12 }} interval={0} angle={-30} textAnchor="end" height={80} />
+                <XAxis dataKey="name" tick={{ fontSize: 12 }} interval={0} angle={-45} textAnchor="end" height={120} />
                 <YAxis allowDecimals={false} />
                 <Tooltip formatter={(value) => [`${value} respuestas`, 'Cantidad']}/>
                 <Bar dataKey="cantidad" minPointSize={5}>

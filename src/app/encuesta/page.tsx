@@ -1,5 +1,5 @@
 
-import EncuestaForm from '@/app/components/EncuestaForm';
+import EncuestaForm from '@/components/forms/EncuestaForm';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
