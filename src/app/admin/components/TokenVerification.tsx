@@ -5,10 +5,6 @@ import { ShieldCheck, KeyRound } from "lucide-react";
 
 const PRIMARY_GREEN = "#22C55E";
 
-/**
- * Componente para verificación de token de admin.
- * Si el token es correcto, ejecuta onVerified (normalmente refresca el contexto y redirige al panel).
- */
 const TokenVerification: React.FC<{ correo: string; onVerified: () => void }> = ({
   correo,
   onVerified,
@@ -17,10 +13,8 @@ const TokenVerification: React.FC<{ correo: string; onVerified: () => void }> = 
   const [token, setToken] = useState("");
   const [touched, setTouched] = useState(false);
 
-  // Validación local simple: debe ser número de 6 dígitos (o ajusta según tu backend)
   const tokenValido = token.trim().length >= 4 && token.trim().length <= 8;
 
-  // Manejador de envío
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setTouched(true);
@@ -66,7 +60,6 @@ const TokenVerification: React.FC<{ correo: string; onVerified: () => void }> = 
               inputMode="numeric"
             />
           </div>
-          {/* Validación local UX para el token */}
           {touched && !tokenValido && (
             <div className="text-xs text-red-500 mt-1 font-semibold">
               El código debe tener entre 4 y 8 dígitos.
@@ -80,7 +73,6 @@ const TokenVerification: React.FC<{ correo: string; onVerified: () => void }> = 
         >
           {loading ? "Verificando..." : "Verificar"}
         </button>
-        {/* Muestra el error del backend */}
         {error && (
           <div className="text-center text-red-600 font-semibold text-sm mt-2 animate-pulse">
             {error}

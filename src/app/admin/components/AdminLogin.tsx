@@ -5,10 +5,6 @@ import { Lock, Mail, Eye, EyeOff } from "lucide-react";
 
 const PRIMARY_GREEN = "#22C55E";
 
-/**
- * Componente de login para administradores.
- * Si el login es exitoso, ejecuta onSuccess.
- */
 const AdminLogin: React.FC<{ onSuccess: () => void }> = ({ onSuccess }) => {
   const { login, error, loading } = useAdminAuth();
   const [correo, setCorreo] = useState("");

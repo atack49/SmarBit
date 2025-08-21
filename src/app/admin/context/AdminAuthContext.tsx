@@ -3,7 +3,6 @@
 import React, { createContext, useContext, useState } from "react";
 import { Admin } from "../types/admin.d";
 
-// Definición del tipo para el contexto
 interface AuthContextType {
   admin: Admin | null;
   loading: boolean;
@@ -14,12 +13,8 @@ interface AuthContextType {
   updateFoto: (url: string) => void;
 }
 
-// Crea el contexto
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-/**
- * Proveedor del contexto de autenticación para admin.
- */
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [admin, setAdmin] = useState<Admin | null>(null);
   const [loading, setLoading] = useState(false);
@@ -27,10 +22,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const API_URL = "http://localhost:3000/MyFitGuide/admin";
 
-  /**
-   * Login de administrador. Si isVerified es true permite acceso directo,
-   * si es false, pedirá el token de verificación.
-   */
   async function login(correo: string, contrasena: string): Promise<boolean> {
     setLoading(true);
     setError(null);
@@ -41,14 +32,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         body: JSON.stringify({ correo, contrasena }),
       });
       const data = await res.json();
-      // Login inválido o error en backend
       if (!res.ok || data.status !== 200 || !data.admin) {
         setError(data.message || "Error al iniciar sesión");
         setAdmin(null);
         setLoading(false);
         return false;
       }
-      // Guarda admin en contexto, asegurando el campo isVerified
       setAdmin({
         _id: data.admin.id ?? data.admin._id,
         correo: data.admin.correo,
@@ -65,9 +54,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }
 
-  /**
-   * Verifica el token recibido en el correo y actualiza isVerified.
-   */
   async function verify(correo: string, token: string): Promise<boolean> {
     setLoading(true);
     setError(null);
@@ -83,7 +69,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         setLoading(false);
         return false;
       }
-      // Si es correcto, actualiza isVerified a true en contexto
       setAdmin((prev) => prev ? { ...prev, isVerified: true } : prev);
       setLoading(false);
       return true;
@@ -94,16 +79,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }
 
-  /**
-   * Actualiza solo la foto del admin en contexto
-   */
+
   function updateFoto(url: string) {
     setAdmin((prev) => prev ? { ...prev, foto: url } : prev);
   }
 
-  /**
-   * Cierra sesión y limpia errores
-   */
   function logout() {
     setAdmin(null);
     setError(null);
@@ -116,9 +96,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-/**
- * Hook para consumir el contexto de autenticación de admin.
- */
 export function useAdminAuth() {
   const context = useContext(AuthContext);
   if (!context) {

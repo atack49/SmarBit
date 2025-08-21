@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState, useCallback } from "react";
-import { QuejaSugerencia } from "../types";
-import { API_BASE_URL } from "../api/api"; // ✅ Importamos la base URL desde api.ts
+import { QuejaSugerencia } from "../types/admin.d";
+import { API_BASE_URL } from "../api/api";
 
-const API_URL = `${API_BASE_URL}/queja-sugerencia`; // ✅ Usamos la base URL
+const API_URL = `${API_BASE_URL}/queja-sugerencia`;
 
 export function useQuejaSugerencia() {
   const [data, setData] = useState<QuejaSugerencia[]>([]);

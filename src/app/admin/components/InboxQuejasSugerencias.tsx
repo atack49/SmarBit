@@ -1,6 +1,6 @@
 //Text inbox para nuevas quejas y sugerencias de parte de los usuarios hacia el equipo de administrador de MyFitGuide
 import React, { useState } from "react";
-import { QuejaSugerencia } from "../types";
+import { QuejaSugerencia } from "../types/admin.d";
 import EstadoBadge from "./EstadoBadge";
 import QuejaSugerenciaModal from "./QuejaSugerenciaModal";
 import { AlertTriangle, Lightbulb, ChevronRight, Inbox, ChevronDown, ChevronUp } from "lucide-react";

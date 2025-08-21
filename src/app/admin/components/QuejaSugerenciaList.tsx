@@ -1,5 +1,5 @@
 import React from "react";
-import { QuejaSugerencia } from "../types";
+import { QuejaSugerencia } from "../types/admin.d";
 import EstadoBadge from "./EstadoBadge";
 import { Lightbulb, AlertTriangle, ChevronRight } from "lucide-react";
 

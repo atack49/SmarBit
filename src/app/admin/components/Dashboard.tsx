@@ -1,6 +1,6 @@
 //Dashboar para apartado de quejas y sugerencias para el modulo preevisto
 import React from "react";
-import { QuejaSugerencia } from "../types";
+import { QuejaSugerencia } from "../types/admin.d";
 import { BarChart3, ClipboardList, CheckCircle2, Eye } from "lucide-react";
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
 
