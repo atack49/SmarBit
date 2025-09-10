@@ -2,12 +2,12 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import Image from 'next/image';
-import { Menu, Download, FileText } from 'lucide-react';
-import logo from '@/app/assets/myfitguide-logo.png';
+import { Menu, FileText, Rocket } from 'lucide-react';
+import logo from '@/app/assets/smartbit-logo.png'; // Cambiado al logo 'S' de SmartBit
 
 const navItems = [
-  { href: '/#myfitguide', label: 'MyFitGuide' },
-  { href: '/#about', label: 'Sobre nosotros' },
+  { href: '/#projects', label: 'Proyectos' },
+  { href: '/#about-us', label: 'Sobre nosotros' },
   { href: '/#contact', label: 'Contacto' },
 ];
 
@@ -15,16 +15,18 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 max-w-screen-2xl items-center px-4 sm:px-6 lg:px-8">
-        {/* Left Section */}
+        {/* Left Section - Logo y Nombre */}
         <div className="flex flex-1 justify-start">
-          <Link href="/" className="flex items-center gap-2" aria-label="MyFitGuide Home">
+          <Link href="/" className="flex items-center" aria-label="SmartBit Home">
             <Image
               src={logo}
-              alt="MyFitGuide Logo"
-              width={128}
-              height={128}
-              className="h-10 w-auto"
+              alt="SmartBit Logo"
+              width={40}
+              height={40}
+              className="h-8 w-auto" // Ajustado para un buen tamaño
             />
+            {/* Se aplica un margen negativo y un ajuste vertical sutil */}
+            <span className="font-bold text-xl text-foreground -ml-2 relative bottom-px">martBit</span>
           </Link>
         </div>
         
@@ -43,16 +45,16 @@ export default function Header() {
 
         {/* Right Section (Desktop) */}
         <div className="hidden md:flex flex-1 items-center justify-end gap-2">
-          <Button asChild className="bg-secondary hover:bg-secondary/90 text-secondary-foreground">
+          <Button asChild variant="outline">
             <Link href="/encuesta">
               <FileText className="mr-2 h-5 w-5" />
               Realizar Encuesta
             </Link>
           </Button>
-          <Button asChild className="bg-primary hover:bg-primary/90 text-primary-foreground">
-            <Link href="/quick-start">
-              <Download className="mr-2 h-5 w-5" />
-              Descargar App
+          <Button asChild>
+            <Link href="/projects/myfitguide">
+              <Rocket className="mr-2 h-5 w-5" />
+              Conoce MyFitGuide
             </Link>
           </Button>
         </div>
@@ -68,7 +70,6 @@ export default function Header() {
             </SheetTrigger>
             <SheetContent side="right">
               <nav className="flex flex-col gap-6 pt-8">
-                {/* Mobile Nav Links */}
                 {navItems.map((item) => (
                   <Link
                     key={item.label}
@@ -86,11 +87,11 @@ export default function Header() {
                   Realizar Encuesta
                 </Link>
                 <Link
-                  href="/quick-start"
+                  href="/projects/myfitguide"
                   className="text-lg font-medium text-foreground hover:text-primary flex items-center"
                 >
-                  <Download className="mr-2 h-5 w-5" />
-                  Descargar App
+                  <Rocket className="mr-2 h-5 w-5" />
+                  Conoce MyFitGuide
                 </Link>
               </nav>
             </SheetContent>
@@ -100,3 +101,4 @@ export default function Header() {
     </header>
   );
 }
+
