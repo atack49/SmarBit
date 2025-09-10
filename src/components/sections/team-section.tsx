@@ -14,7 +14,7 @@ export default function TeamSection() {
 
   return (
     <div className="mt-16 text-center py-16 md:py-24">
-      <h3 className="text-2xl font-headline font-bold text-primary mb-8">Nuestro Equipo</h3>
+      <h2 className="text-3xl font-headline font-bold text-primary sm:text-4xl">Contáctanos</h2>
       <p className="text-lg text-foreground/80 max-w-3xl mx-auto mb-10">
         Un equipo de estudiantes apasionados por la tecnología y la innovación, dedicados a crear soluciones que marcan la diferencia.
       </p>
