@@ -4,6 +4,7 @@ import { FeaturesSection } from "./sections/FeaturesSection";
 import { HeroSection } from "./sections/HeroSection";
 import { LegalSection } from "./sections/LegalSection";
 import { PrinciplesSection } from "./sections/PrinciplesSection";
+import FloatingChatbot from "@/components/FloatingChatbot/FloatingChatbot";
 
 export default function MyFitGuidePage() {
   return (
@@ -16,6 +17,7 @@ export default function MyFitGuidePage() {
         <LegalSection />
         <CtaSection />
       </main>
+      <FloatingChatbot/>
     </>
   );
 }
