@@ -1,4 +1,4 @@
-//Modal de muestra para quejas y sugerencias con vista intuitiva
+//Modal de muestra para quejas y sugerencias
 "use client";
 import React, { useState, useEffect } from "react";
 import { QuejaSugerencia } from "../types/admin.d";
