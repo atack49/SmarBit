@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { Poppins, PT_Sans } from 'next/font/google'; // Método optimizado para fuentes
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
-import Header from '@/components/layout/header'; // 1. Importamos el Header
+import Header from '@/components/layout/HeaderWrapper'; // 1. Importamos el HeaderWrapper (cliente) que decide mostrar u ocultar el header
 import Footer from '@/components/layout/footer'; // 2. Importamos el Footer
 import { FloatingBackButton } from '@/components/ui/floating-back-button'; // Se añade la importación del botón
 

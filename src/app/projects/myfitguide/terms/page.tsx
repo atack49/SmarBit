@@ -1,17 +1,14 @@
 "use client";
 import * as React from 'react';
+import { useSearchParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowRight, ShieldCheck } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { ArrowLeft, ShieldCheck } from 'lucide-react';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
-// ===================================================================
-// ===== INICIO: ORGANIZACIÓN DEL CONTENIDO LEGAL ====================
-// ===================================================================
 const legalContent = {
   terms: {
     title: "Términos y Condiciones",
-    summary: "Al usar MyFitGuide, aceptas que es una herramienta de orientación para hábitos saludables y no un servicio médico. Es crucial que consultes a un profesional de la salud antes de iniciar cualquier plan.",
     fullText: `
 MyFitGuide es una aplicación móvil desarrollada por SmartBit, cuyo objetivo es ofrecer planes de alimentación y rutinas de ejercicio personalizadas para fomentar hábitos saludables. Al utilizar esta aplicación, usted acepta cumplir con los presentes Términos y Condiciones. Si no está de acuerdo con alguno de los puntos aquí descritos, le solicitamos que no utilice la aplicación.
 
@@ -70,7 +67,6 @@ Email: myfitguide2025@gmail.com
   },
   privacy: {
     title: "Política de Privacidad",
-    summary: "Respetamos tu privacidad. Recopilamos la información necesaria para personalizar tus planes, como datos de tu cuenta, actividad y salud. No vendemos tus datos y los protegemos con medidas de seguridad.",
     fullText: `
 En MyFitGuide respetamos su privacidad. Por lo que en esta Política explica cómo recopilamos, usamos, protegemos y compartimos su información personal cuando utiliza nuestra aplicación.
 
@@ -118,69 +114,48 @@ Para dudas o solicitudes relacionadas con esta Política de Privacidad, puede co
     `
   }
 };
-// ===================================================================
-// ===== FIN: ORGANIZACIÓN DEL CONTENIDO LEGAL =======================
-// ===================================================================
 
-export function LegalSection() {
-  // Estado para controlar qué pestaña está activa
-  const [activeTab, setActiveTab] = React.useState<'terms' | 'privacy'>('terms');
-  // Ya no usamos modal: abriremos una nueva pestaña con la página de términos
+export default function TermsPage() {
+  const searchParams = useSearchParams();
+  const initialTab = (searchParams?.get('tab') === 'privacy') ? 'privacy' : 'terms';
+  const [activeTab, setActiveTab] = React.useState<'terms' | 'privacy'>(initialTab);
 
-  // Contenido actual basado en la pestaña activa
-  const currentContent = legalContent[activeTab];
+  const content = legalContent[activeTab];
 
   return (
-    <>
-      <section className="py-20 md:py-20">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-primary sm:text-4xl">
-              Transparencia y Confianza
-            </h2>
-            <p className="mt-4 text-lg text-foreground/80 max-w-3xl mx-auto">
-              Queremos que te sientas seguro usando MyFitGuide. Aquí te explicamos de forma clara cómo funciona nuestra app y el uso que le damos a tu información.
-            </p>
-          </div>
-
-          <Card className="max-w-3xl mx-auto text-left shadow-lg">
-            <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as 'terms' | 'privacy')} className="w-full">
-              <CardHeader>
-                <div className="flex items-start gap-4">
-                  <ShieldCheck className="w-8 h-8 text-primary flex-shrink-0 mt-1" />
-                  <div>
-                    {/* El título ahora es dinámico */}
-                    <CardTitle className="text-2xl">{currentContent.title}</CardTitle>
-                    <CardDescription className="mt-1">Selecciona una sección para ver el resumen.</CardDescription>
-                  </div>
-                </div>
-                <TabsList className="grid w-full grid-cols-2 mt-4">
-                  <TabsTrigger value="terms">Términos y Condiciones</TabsTrigger>
-                  <TabsTrigger value="privacy">Política de Privacidad</TabsTrigger>
-                </TabsList>
-              </CardHeader>
-              <CardContent>
-                {/* El resumen ahora es dinámico */}
-                <p className="text-base text-foreground/90 mb-6" style={{ textAlign: 'justify' }}>
-                  {currentContent.summary}
-                </p>
-                <Button
-                  onClick={() => {
-                    const tab = activeTab === 'terms' ? 'terms' : 'privacy';
-                    window.open(`/projects/myfitguide/terms?tab=${tab}`, '_blank', 'noopener,noreferrer');
-                  }}
-                >
-                  Leer {activeTab === 'terms' ? 'Términos' : 'Políticas'} Completos
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-              </CardContent>
+    <main className="min-h-screen bg-background py-12">
+      <div className="container mx-auto px-4">
+        <Card className="max-w-4xl mx-auto">
+          <CardHeader>
+            <div className="flex items-start gap-4">
+              <ShieldCheck className="w-8 h-8 text-primary mt-1" />
+              <div>
+                <CardTitle className="text-2xl">{content.title}</CardTitle>
+              </div>
+            </div>
+            <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as 'terms' | 'privacy')}>
+              <TabsList className="grid grid-cols-2 mt-4">
+                <TabsTrigger value="terms">Términos y Condiciones</TabsTrigger>
+                <TabsTrigger value="privacy">Política de Privacidad</TabsTrigger>
+              </TabsList>
             </Tabs>
-          </Card>
+          </CardHeader>
 
-        </div>
-      </section>
+          <CardContent className="prose max-w-none">
+            <div className="whitespace-pre-wrap text-foreground/90" style={{ textAlign: 'justify' }}>
+              {content.fullText}
+            </div>
 
-      {/* Antes mostrábamos un modal con el texto completo; ahora se abre una página nueva en otra pestaña */}
-    </>
+            <div className="mt-8 flex justify-between">
+              <Button variant="ghost" onClick={() => window.close()}>
+                <ArrowLeft className="mr-2 h-4 w-4" />
+                Cerrar
+              </Button>
+              <div />
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    </main>
   );
 }

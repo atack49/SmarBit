@@ -76,7 +76,7 @@ export function CustomModal({
         {/* Contenido del Modal (con scroll) */}
         <div className="p-6 md:py-2 overflow-y-auto">
           {/* Muestra el contenido que se le pasa directamente */}
-          {children}
+          <div style={{ textAlign: 'justify' }}>{children}</div>
         </div>
       </div>
     </div>
