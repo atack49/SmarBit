@@ -51,7 +51,6 @@ const Chatbot: React.FC<ChatbotProps> = ({ initialQuestion, onClose }) => {
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
   const initialQuestionRef = useRef(initialQuestion);
 
-  // Saludo inicial
   useEffect(() => {
     setMessages([
       {
@@ -68,7 +67,6 @@ const Chatbot: React.FC<ChatbotProps> = ({ initialQuestion, onClose }) => {
     const mensajeUsuario = { sender: 'user', text: preguntaUsuario };
     const pregunta = normalizar(preguntaUsuario);
 
-    // 1️⃣ Buscar coincidencia difusa con Fuse.js
     const resultado = fuse.search(pregunta);
 
     let respuesta = '';
@@ -76,13 +74,11 @@ const Chatbot: React.FC<ChatbotProps> = ({ initialQuestion, onClose }) => {
     if (resultado.length > 0 && resultado[0].score! < 0.7) {
       respuesta = resultado[0].item.text;
     } else {
-      // 2️⃣ Buscar palabra clave que esté incluida
       let coincidencia = respuestas.find((r) => {
         const keyNorm = normalizar(r.key);
         return pregunta.includes(keyNorm) || keyNorm.includes(pregunta);
       });
 
-      // 3️⃣ Si aún no hay coincidencia, buscar por palabras sueltas
       if (!coincidencia) {
         const palabrasUsuario = pregunta.split(' ');
         coincidencia = respuestas.find((r) => {
@@ -106,7 +102,6 @@ const Chatbot: React.FC<ChatbotProps> = ({ initialQuestion, onClose }) => {
     setInput('');
   };
 
-  // Si hay pregunta inicial
   useEffect(() => {
     if (initialQuestion && initialQuestion !== initialQuestionRef.current) {
       handleSend(initialQuestion);
@@ -114,7 +109,7 @@ const Chatbot: React.FC<ChatbotProps> = ({ initialQuestion, onClose }) => {
     }
   }, [initialQuestion]);
 
-  // Scroll automático
+  
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
@@ -138,7 +133,6 @@ const Chatbot: React.FC<ChatbotProps> = ({ initialQuestion, onClose }) => {
         </button>
       </div>
 
-      {/* Mensajes */}
       <div className="flex-1 overflow-y-auto p-5 bg-gray-50 space-y-4">
         {showWelcomeScreen ? (
           <div className="flex flex-col items-center justify-center flex-1 text-center animate-slideUp h-full">
@@ -186,7 +180,6 @@ const Chatbot: React.FC<ChatbotProps> = ({ initialQuestion, onClose }) => {
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Input */}
       <div className="flex border-t border-gray-200 bg-white">
         <input
           value={input}
