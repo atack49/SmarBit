@@ -6,20 +6,24 @@ import { X } from 'lucide-react';
 const respuestas = [
   { key: 'crear cuenta', text: "Para crear una cuenta, ve a la pantalla de inicio, selecciona 'Crear cuenta', completa los datos y acepta los términos." },
   { key: 'iniciar sesión', text: "En la pantalla principal ingresa tu correo y contraseña previamente registrados, y presiona 'Iniciar sesión'." },
-  { key: 'recuperar contraseña', text: "Ve a '¿Olvidaste tu contraseña?', ingresa tu correo y sigue las instrucciones para restablecerla." },
-  { key: 'ver progreso', text: 'En la pantalla principal puedes ver tu progreso: IMC, peso, edad, altura y objetivo.' },
-  { key: 'ver dieta', text: "Desde la pantalla principal toca 'Dietas'. Verás tu plan alimenticio con ingredientes, calorías y proteínas." },
-  { key: 'ver rutina', text: "En la pantalla principal selecciona 'Rutinas a tu medida' y verás tus ejercicios diarios, series y repeticiones." },
-  { key: 'como encuentro mi rutina', text: "Ve a 'Rutinas' dentro de la pantalla principal o en el menú; allí podrás ver y personalizar tu rutina." },
+  { key: 'recuperar contraseña', text: "Ve a '¿Olvidaste tu contraseña?' que se encuentra en la pantalla de inicio de sesion, ingresa tu correo y sigue las instrucciones para restablecerla." },
+  { key: 'progreso', text: 'En la pantalla principal puedes ver tu progreso: IMC, peso, edad, altura y objetivo.' },
+  { key: 'dieta', text: "Desde la pantalla principal toca 'Dietas', que se encuentra en el menú de abajo. Verás tu plan alimenticio con ingredientes, calorías y proteínas." },
+  //{ key: 'ver rutina', text: "En la pantalla principal selecciona 'Rutinas', que se encuentra en el menú de abajo y verás tus ejercicios diarios, series y repeticiones." },
+  { key: 'rutina', text: "En la pantalla principal selecciona 'Rutinas', que se encuentra en el menú de abajo y verás tus ejercicios diarios, series y repeticiones." },
   { key: 'favoritos', text: "En el menú lateral elige 'Favoritos' para ver tus comidas y ejercicios guardados." },
-  { key: 'ver favoritos', text: "En el menú lateral elige 'Favoritos' para ver tus comidas y ejercicios guardados." },
-  { key: 'mis favoritos', text: "En el menú lateral elige 'Favoritos' para ver tus comidas y ejercicios guardados." },
-  { key: 'historial', text: 'En el menú lateral selecciona \'Historial\' para ver los cambios en tus rutinas y dietas.' },
-  { key: 'lugares cercanos', text: "Abre el menú lateral y selecciona 'Gym cercanos'. La app pedirá permiso de ubicación y mostrará los gimnasios en un mapa." },
+  //{ key: 'ver favoritos', text: "En el menú lateral elige 'Favoritos' para ver tus comidas y ejercicios guardados." },
+  //{ key: 'mis favoritos', text: "En el menú lateral elige 'Favoritos' para ver tus comidas y ejercicios guardados." },
+  { key: 'historial', text: "En el menú lateral selecciona 'Historial' para ver los cambios en tus rutinas y dietas." },
+  { key: 'lugares cercanos', text: "Abre el menú lateral y selecciona 'Lugares cercanos'. La app pedirá permiso de ubicación y mostrará los gimnasios y parques en un mapa." },
+  { key: 'gym cercanos', text: "Abre el menú lateral y selecciona 'Lugares cercanos'. La app pedirá permiso de ubicación y mostrará los gimnasios y parques en un mapa." },
+  { key: 'gimnasios cercanos', text: "Abre el menú lateral y selecciona 'Lugares cercanos'. La app pedirá permiso de ubicación y mostrará los gimnasios y parques en un mapa." },
+  { key: 'parques cercanos', text: "Abre el menú lateral y selecciona 'Lugares cercanos'. La app pedirá permiso de ubicación y mostrará los gimnasios y parques en un mapa." },
   { key: 'quejas', text: "En el menú lateral selecciona 'Quejas y Sugerencias', escribe tu mensaje y correo, y presiona 'Enviar'." },
   { key: 'cerrar sesión', text: "Ve al menú lateral y selecciona 'Cerrar sesión'. La app te pedirá confirmación antes de salir." },
-  { key: 'para que sirves', text: 'Soy tu asistente virtual de MyFitGuide 🤖. Puedo ayudarte a encontrar pantallas, explicarte funciones (favoritos, dietas, rutinas), y darte pasos para recuperar contraseña o crear cuenta.' },
-  { key: 'asistente', text: 'Soy tu asistente virtual de MyFitGuide 🤖, puedo ayudarte con preguntas sobre el uso de la app.' },
+  { key: 'cierro sesión', text: "Ve al menú lateral y selecciona 'Cerrar sesión'. La app te pedirá confirmación antes de salir." },
+  { key: 'para que sirves', text: "Soy tu asistente virtual de MyFitGuide 🤖. Puedo ayudarte a encontrar pantallas, explicarte funciones (favoritos, dietas, rutinas), y darte pasos para recuperar contraseña o crear cuenta." },
+  { key: 'asistente', text: "Ve al menú lateral y selecciona 'Asistente IA', escribe cualquier duda que tengas en la aplicación y presiona enviar." },
 ];
 
 const fuse = new Fuse(respuestas, {
@@ -47,13 +51,13 @@ const Chatbot: React.FC<ChatbotProps> = ({ initialQuestion, onClose }) => {
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
   const initialQuestionRef = useRef(initialQuestion);
 
-  // Saludo inicial solo una vez
+  // Saludo inicial
   useEffect(() => {
     setMessages([
       {
         sender: 'bot',
-        text: '¡Hola! Soy tu asistente MyFitGuide 💬. ¿En qué puedo ayudarte hoy?'
-      }
+        text: '¡Hola! Soy tu asistente MyFitGuide 💬. ¿En qué puedo ayudarte hoy?',
+      },
     ]);
   }, []);
 
@@ -64,11 +68,37 @@ const Chatbot: React.FC<ChatbotProps> = ({ initialQuestion, onClose }) => {
     const mensajeUsuario = { sender: 'user', text: preguntaUsuario };
     const pregunta = normalizar(preguntaUsuario);
 
+    // 1️⃣ Buscar coincidencia difusa con Fuse.js
     const resultado = fuse.search(pregunta);
-    let respuesta = 'Lo siento 😅, no encontré información sobre eso. Intenta preguntar de otra forma.';
 
-    if (resultado.length > 0 && typeof resultado[0].score === 'number' && resultado[0].score < 0.7) {
+    let respuesta = '';
+
+    if (resultado.length > 0 && resultado[0].score! < 0.7) {
       respuesta = resultado[0].item.text;
+    } else {
+      // 2️⃣ Buscar palabra clave que esté incluida
+      let coincidencia = respuestas.find((r) => {
+        const keyNorm = normalizar(r.key);
+        return pregunta.includes(keyNorm) || keyNorm.includes(pregunta);
+      });
+
+      // 3️⃣ Si aún no hay coincidencia, buscar por palabras sueltas
+      if (!coincidencia) {
+        const palabrasUsuario = pregunta.split(' ');
+        coincidencia = respuestas.find((r) => {
+          const keyNorm = normalizar(r.key);
+          return palabrasUsuario.some(
+            (p) =>
+              keyNorm.includes(p) ||
+              p.includes(keyNorm) ||
+              (p.length > 3 && keyNorm.startsWith(p.slice(0, 4)))
+          );
+        });
+      }
+
+      respuesta = coincidencia
+        ? coincidencia.text
+        : 'Lo siento 😅, no encontré información sobre eso. Intenta preguntar de otra forma.';
     }
 
     const mensajeBot = { sender: 'bot', text: respuesta };
@@ -76,6 +106,7 @@ const Chatbot: React.FC<ChatbotProps> = ({ initialQuestion, onClose }) => {
     setInput('');
   };
 
+  // Si hay pregunta inicial
   useEffect(() => {
     if (initialQuestion && initialQuestion !== initialQuestionRef.current) {
       handleSend(initialQuestion);
@@ -83,6 +114,7 @@ const Chatbot: React.FC<ChatbotProps> = ({ initialQuestion, onClose }) => {
     }
   }, [initialQuestion]);
 
+  // Scroll automático
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
@@ -98,12 +130,15 @@ const Chatbot: React.FC<ChatbotProps> = ({ initialQuestion, onClose }) => {
       {/* Header */}
       <div className="relative flex items-center justify-center bg-green-600 text-white p-3 font-semibold text-lg shadow-md">
         <span>Asistente MyFitGuide 🤖</span>
-        <button onClick={onClose} className="absolute right-3 top-1/2 -translate-y-1/2 text-white hover:text-gray-200">
+        <button
+          onClick={onClose}
+          className="absolute right-3 top-1/2 -translate-y-1/2 text-white hover:text-gray-200"
+        >
           <X size={20} />
         </button>
       </div>
 
-      
+      {/* Mensajes */}
       <div className="flex-1 overflow-y-auto p-5 bg-gray-50 space-y-4">
         {showWelcomeScreen ? (
           <div className="flex flex-col items-center justify-center flex-1 text-center animate-slideUp h-full">
@@ -132,9 +167,12 @@ const Chatbot: React.FC<ChatbotProps> = ({ initialQuestion, onClose }) => {
           </div>
         ) : (
           messages.map((m, i) => (
-            <div key={i} className={`flex ${m.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
+            <div
+              key={i}
+              className={`flex ${m.sender === 'user' ? 'justify-end' : 'justify-start'}`}
+            >
               <div
-                className={`px-3 py-2 rounded-2xl max-w-[75%] text-sm ${ 
+                className={`px-3 py-2 rounded-2xl max-w-[75%] text-sm ${
                   m.sender === 'user'
                     ? 'bg-green-600 text-white rounded-br-none'
                     : 'bg-gray-200 text-gray-900 rounded-bl-none'
@@ -148,6 +186,7 @@ const Chatbot: React.FC<ChatbotProps> = ({ initialQuestion, onClose }) => {
         <div ref={messagesEndRef} />
       </div>
 
+      {/* Input */}
       <div className="flex border-t border-gray-200 bg-white">
         <input
           value={input}
