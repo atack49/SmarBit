@@ -20,7 +20,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const API_URL = "http://18.220.28.9:3000/MyFitGuide/admin";
+  const API_URL = "https://myfitguide.duckdns.org/MyFitGuide/admin";
 
   async function login(correo: string, contrasena: string): Promise<boolean> {
     setLoading(true);
