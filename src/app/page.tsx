@@ -3,10 +3,14 @@ import HeroSection from '@/components/sections/hero-section';
 import ProjectsSection from '@/components/sections/projects-section';
 import TeamSection from '@/components/sections/team-section';
 import ValuesSection from '@/components/sections/values-section';
+import NotificationClientInitializer from '@/components/NotificationClientInitializer'; 
 
 export default function HomePage() {
+  
   return (
     <>
+      <NotificationClientInitializer />
+
       <HeroSection />
       <ValuesSection />
       <ProjectsSection />
