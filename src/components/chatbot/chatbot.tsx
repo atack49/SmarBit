@@ -24,6 +24,25 @@ const respuestas = [
   { key: 'cierro sesión', text: "Ve al menú lateral y selecciona 'Cerrar sesión'. La app te pedirá confirmación antes de salir." },
   { key: 'para que sirves', text: "Soy tu asistente virtual de MyFitGuide 🤖. Puedo ayudarte a encontrar pantallas, explicarte funciones (favoritos, dietas, rutinas), y darte pasos para recuperar contraseña o crear cuenta." },
   { key: 'asistente', text: "Ve al menú lateral y selecciona 'Asistente IA', escribe cualquier duda que tengas en la aplicación y presiona enviar." },
+{
+  key: 'eliminar cuenta',
+  text: `
+  <b>Eliminar cuenta MyFitGuide</b><br>
+  Sigue estos pasos para solicitar la eliminación de tu cuenta:<br>
+  1️⃣ Abre la app y ve a <b>Soporte MyFitGuide</b> desde el menú lateral.<br>
+  2️⃣ En el formulario selecciona:<br>
+  &nbsp;&nbsp;• <b>Tipo:</b> Queja<br>
+  &nbsp;&nbsp;• <b>Categoría:</b> Acceso<br>
+  &nbsp;&nbsp;• <b>Mensaje:</b> <code>SOLICITUD DE ELIMINACIÓN DE CUENTA: [Tu correo] y la razón.</code><br>
+  3️⃣ Presiona <b>Enviar</b> para finalizar tu solicitud.<br>
+  🕒 El proceso tarda entre <b>1 y 5 días hábiles</b>.<br>
+  🔒 Todos tus datos personales, rutinas y dietas serán eliminados.<br>
+  <b>Si quieres saber a detalle cómo eliminar tu cuenta, da clic en el siguiente enlace:</b>
+  <a href="https://myfitguideapp-f48a8.web.app/projects/myfitguide/delete-account" target="_blank" style="color:#16a34a; text-decoration:underline;">
+    Guía completa de eliminación de cuenta
+  </a>
+  `
+},
 ];
 
 const fuse = new Fuse(respuestas, {
@@ -172,7 +191,11 @@ const Chatbot: React.FC<ChatbotProps> = ({ initialQuestion, onClose }) => {
                     : 'bg-gray-200 text-gray-900 rounded-bl-none'
                 }`}
               >
-                {m.text}
+               <div
+  dangerouslySetInnerHTML={{
+    __html: m.text.replace(/\n/g, "<br/>"),
+  }}
+/>
               </div>
             </div>
           ))
